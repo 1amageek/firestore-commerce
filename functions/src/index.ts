@@ -20,13 +20,13 @@ import { Payout } from './models/Payout'
 import { BalanceTransaction } from './models/BalanceTransaction'
 import { TradeTransaction } from './models/TradeTransaction'
 
-export const createAccount = functions.handler.https.onCall(async (data, context) => {
+export const createAccount = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
 		// Throwing an HttpsError so that the client gets the error details.
 		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
 	}
 
-	const STRIPE_API_KEY = config.stripe.api_key
+	const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
 
 	if (!STRIPE_API_KEY) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
@@ -38,7 +38,6 @@ export const createAccount = functions.handler.https.onCall(async (data, context
 
 	try {
 		const customer = await stripe.customers.create({ description: uid })
-
 		const account: Account = new Account(uid)
 		account.country = cuntory
 		account.stripeID = customer.id
@@ -57,7 +56,7 @@ export const createAccount = functions.handler.https.onCall(async (data, context
 	}
 })
 
-export const checkout = functions.handler.https.onCall(async (data, context) => {
+export const checkout = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
 		// Throwing an HttpsError so that the client gets the error details.
 		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')

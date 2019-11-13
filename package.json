@@ -1,8 +1,11 @@
 {
   "name": "functions",
   "scripts": {
+    "prepare": "npm run build",
     "lint": "tslint --project tsconfig.json",
-    "build": "tsc",
+    "clean": "rimraf functions/lib",
+    "build": "npm run clean && npm run compile",
+    "compile": "tsc",
     "serve": "npm run build && firebase serve --only functions",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
@@ -12,7 +15,7 @@
   "engines": {
     "node": "8"
   },
-  "main": "lib/index.js",
+  "main": "functions/lib/index.js",
   "dependencies": {
     "@1amageek/ballcap-admin": "^0.5.0",
     "@1amageek/tradestore": "^0.1.0",
@@ -21,8 +24,11 @@
     "stripe": "^7.13.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.23",
     "@types/stripe": "^7.12.2",
     "firebase-functions-test": "^0.1.7",
+    "rimraf": "^3.0.0",
+    "ts-jest": "^24.1.0",
     "tslint": "^5.20.1",
     "typescript": "^3.7.2"
   },
