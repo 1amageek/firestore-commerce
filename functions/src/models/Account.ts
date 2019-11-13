@@ -16,9 +16,11 @@ export class Account extends Doc implements AccountProtocol<BalanceTransaction, 
 	@Field hasLegalEntity: boolean = false
 	@Field commissionRate: number = 10
 	@Field balance: Balance = { available: {}, pending: {} }
-	@SubCollection balanceTransactions: Collection<BalanceTransaction> = new Collection()
-	@SubCollection payoutRequests: Collection<Payout> = new Collection()
 	@Field accountInformation: { [key: string]: any } = {}
 	@Field IPAddress?: string
 	@Field metadata?: { [key: string]: any } = {}
+
+	// SubCollection
+	@SubCollection balanceTransactions: Collection<BalanceTransaction> = new Collection()
+	@SubCollection payoutRequests: Collection<Payout> = new Collection()
 }
