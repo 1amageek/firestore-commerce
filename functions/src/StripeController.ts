@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions'
-import { PaymentDelegate, OrderItemProtocol, OrderProtocol, Currency, BalanceTransactionProtocol, AccountProtocol, PayoutProtocol, TransferOptions, PayoutOptions, PaymentOptions } from '@1amageek/tradestore'
+import { PaymentDelegate, OrderItemProtocol, OrderProtocol, Currency, BalanceTransactionProtocol, AccountProtocol, PayoutProtocol, TransferOptions, PayoutOptions, PaymentOptions, SubscriptionItemProtocol, SubscriptionProtocol, SubscriptionOptions } from '@1amageek/tradestore'
 import * as Stripe from 'stripe'
 import config from './config'
 
@@ -51,7 +51,7 @@ export class StripeController implements PaymentDelegate {
 		throw new Error("Method not implemented.");
 	}
 
-	async pay<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions) {
+	async charge<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions) {
 
 		const stripe = this.stripe()
 
@@ -82,6 +82,32 @@ export class StripeController implements PaymentDelegate {
 			throw error
 		}
 	}
+
+	async subscribe<U extends SubscriptionItemProtocol, T extends SubscriptionProtocol<U>>(subscription: T, options: SubscriptionOptions): Promise<any> {
+        if (!options.customer) {
+            throw new Error("[StripeController] CustomerID is required for subscription.")
+		}
+		const stripe = this.stripe()
+        const customer: string = options.customer
+
+        const data: Stripe.subscriptions.ISubscriptionCreationOptions = {
+            customer: customer,
+			trial_from_plan: true,
+			metadata: options.metadata
+        }
+
+        data.items = subscription.items.map(item => {
+            return {
+                plan: item.planReference.id,
+                quantity: item.quantity
+            }
+        })
+
+        if (options.metadata) {
+            data.metadata = options.metadata
+        }
+        return await stripe.subscriptions.create(data)
+    }
 
 	async refund<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions, reason?: string | undefined) {
 

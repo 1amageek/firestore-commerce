@@ -1,5 +1,5 @@
 import { Doc, Field, DocumentReference, firestore, CollectionReference } from '@1amageek/ballcap-admin'
-import { TradeTransactionProtocol, TradeTransactionType } from '@1amageek/tradestore'
+import { ShardType, randomShard, DafaultShardCharacters, TradeTransactionProtocol, TradeTransactionType } from '@1amageek/tradestore'
 
 export class TradeTransaction extends Doc implements TradeTransactionProtocol {
 
@@ -7,6 +7,7 @@ export class TradeTransaction extends Doc implements TradeTransactionProtocol {
 		return firestore.collection("commerce")
 	}
 
+	@Field shard: ShardType = randomShard(DafaultShardCharacters)
 	@Field type: TradeTransactionType = TradeTransactionType.unknown
 	@Field selledBy: string = ''
 	@Field purchasedBy: string = ''

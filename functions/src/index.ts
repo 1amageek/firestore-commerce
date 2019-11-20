@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions'
 import * as firebase from 'firebase-admin'
 import * as Stripe from 'stripe'
 import { initialize, Batch } from '@1amageek/ballcap-admin'
-import { Manager, PaymentOptions, OrderPaymentStatus, TradestoreError } from '@1amageek/tradestore'
+import { Manager, PaymentOptions, OrderPaymentStatus, TradestoreError, SubscriptionController, SubscriptionOptions } from '@1amageek/tradestore'
 import config from './config'
 import { TradeController } from './TradeController'
 import { StripeController } from './StripeController'
@@ -13,8 +13,11 @@ initialize(firebase)
 import { Account } from './models/Account'
 import { User } from './models/User'
 import { SKU } from './models/SKU'
+import { Plan } from './models/Plan'
 import { Order } from './models/Order'
 import { OrderItem } from './models/OrderItem'
+import { Subscription } from './models/Subscription'
+import { SubscriptionItem } from './models/SubscriptionItem'
 import { Stock } from './models/Stock'
 import { Payout } from './models/Payout'
 import { BalanceTransaction } from './models/BalanceTransaction'
@@ -93,7 +96,7 @@ export const checkout = functions.https.onCall(async (data, context) => {
 
 		try {
 			// tslint:disable-next-line:no-shadowed-variable
-			const result = await manager.runTransaction(orderReference, {}, async (order, option, transaction) => {
+			const result = await manager.runTransaction(orderReference, paymentOptions, async (order, option, transaction) => {
 				if (order.paymentStatus !== OrderPaymentStatus.none) {
 					return
 				}
@@ -126,15 +129,15 @@ export const checkout = functions.https.onCall(async (data, context) => {
 				if (order.amount === 0) {
 					manager.orderManager.update(order, {}, {}, transaction)
 				} else {
-					paymentResult = await manager.delegate!.pay(order.currency, order.amount, order, paymentOptions)
+					paymentResult = await manager.delegate!.charge(order.currency, order.amount, order, option)
 					manager.balanceManager.charge(order.purchasedBy,
 						order.documentReference,
 						order.currency,
 						order.amount,
-						{ [paymentOptions.vendorType]: paymentResult },
+						{ [option.vendorType]: paymentResult },
 						transaction)
 					manager.orderManager.update(order, {},
-						{ [paymentOptions.vendorType]: paymentResult },
+						{ [option.vendorType]: paymentResult },
 						transaction)
 				}
 				return tradeTransactions
@@ -149,6 +152,45 @@ export const checkout = functions.https.onCall(async (data, context) => {
 			}
 			throw new functions.https.HttpsError('internal', (error as TradestoreError).message, { code: (error as TradestoreError).code })
 		}
+	} catch (error) {
+		throw error
+	}
+})
+
+export const subscribe = functions.https.onCall(async (data, context) => {
+	if (!context.auth) {
+		// Throwing an HttpsError so that the client gets the error details.
+		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
+	}
+	const uid: string = context.auth.uid
+	const planReferencePaths: string[] = data['planReferences']
+
+	const account: Account = await new Account(uid).fetch()
+	const customer: string | undefined = account.stripeID
+
+	if (!customer) {
+		throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.')
+	}
+
+	const promise: Promise<Plan>[] = planReferencePaths.map(path => new Plan(path).fetch())
+	const plans: Plan[] = await Promise.all(promise)
+
+	const subscriptionOptions: SubscriptionOptions = {
+		vendorType: "stripe",
+		customer: customer
+	}
+
+	const controller: SubscriptionController<Plan, SubscriptionItem, Subscription, User> = new SubscriptionController(Subscription.self(), SubscriptionItem.model())
+	controller.delegate = new StripeController()
+	const subscriber: User = new User(uid)
+
+	try {
+		await controller.subscribe(subscriber, plans, subscriptionOptions, async (subscription, option, transaction) => {
+			const result: Stripe.subscriptions.ISubscription = await controller.delegate!.subscribe(subscription, option)
+			subscription.result = result
+			console.info(result)
+			return subscription
+		})
 	} catch (error) {
 		throw error
 	}

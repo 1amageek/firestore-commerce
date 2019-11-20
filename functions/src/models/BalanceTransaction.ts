@@ -1,5 +1,5 @@
 import { Doc, Field, firestore, CollectionReference } from '@1amageek/ballcap-admin'
-import { BalanceTransactionProtocol, Currency, BalanceTransactionType, TransactionResult } from '@1amageek/tradestore'
+import { ShardType, randomShard, DafaultShardCharacters, BalanceTransactionProtocol, Currency, BalanceTransactionType, TransactionResult } from '@1amageek/tradestore'
 
 export class BalanceTransaction extends Doc implements BalanceTransactionProtocol {
 
@@ -7,6 +7,7 @@ export class BalanceTransaction extends Doc implements BalanceTransactionProtoco
 		return firestore.collection("commerce")
 	}
 
+	@Field shard: ShardType = randomShard(DafaultShardCharacters)
 	@Field type: BalanceTransactionType = BalanceTransactionType.payment
 	@Field currency: Currency = Currency.USD
 	@Field amount: number = 0

@@ -1,11 +1,13 @@
 import { Doc, Collection, Field, SubCollection, firestore, CollectionReference } from '@1amageek/ballcap-admin'
-import { UserProtocol } from '@1amageek/tradestore'
+import { Tradable, Publishable } from '@1amageek/tradestore'
 import { TradeTransaction } from './TradeTransaction'
 import { Item } from './Item'
 import { OrderItem } from './OrderItem'
 import { Order } from './Order'
+import { Subscription } from './Subscription'
+import { SubscriptionItem } from './SubscriptionItem'
 
-export class User extends Doc implements UserProtocol<Order, OrderItem, TradeTransaction> {
+export class User extends Doc implements Tradable<Order, OrderItem, TradeTransaction, Subscription, SubscriptionItem>, Publishable<User, Subscription, SubscriptionItem> {
 
 	parentReference(): CollectionReference {
 		return firestore.collection("commerce")
@@ -18,4 +20,6 @@ export class User extends Doc implements UserProtocol<Order, OrderItem, TradeTra
     @SubCollection receivedOrders: Collection<Order> = new Collection()
     @SubCollection items: Collection<Item> = new Collection()
     @SubCollection tradeTransactions: Collection<TradeTransaction> = new Collection()
+    @SubCollection subscriptions: Collection<Subscription> = new Collection()
+    @SubCollection subscribers: Collection<User> = new Collection()
 }
