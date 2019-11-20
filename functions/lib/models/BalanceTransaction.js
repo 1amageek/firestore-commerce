@@ -14,6 +14,7 @@ const tradestore_1 = require("@1amageek/tradestore");
 class BalanceTransaction extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
+        this.shard = tradestore_1.randomShard(tradestore_1.DafaultShardCharacters);
         this.type = tradestore_1.BalanceTransactionType.payment;
         this.currency = tradestore_1.Currency.USD;
         this.amount = 0;
@@ -23,6 +24,10 @@ class BalanceTransaction extends ballcap_admin_1.Doc {
         return ballcap_admin_1.firestore.collection("commerce");
     }
 }
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], BalanceTransaction.prototype, "shard", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)

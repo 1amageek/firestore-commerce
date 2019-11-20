@@ -11,13 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 const tradestore_1 = require("@1amageek/tradestore");
-class TradeTransaction extends ballcap_admin_1.Doc {
+class Plan extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
-        this.shard = tradestore_1.randomShard(tradestore_1.DafaultShardCharacters);
-        this.type = tradestore_1.TradeTransactionType.unknown;
-        this.selledBy = '';
-        this.purchasedBy = '';
+        this.currency = tradestore_1.Currency.JPY;
+        this.amount = 0;
+        this.interval = tradestore_1.Interval.month;
+        this.intervalCount = 1;
+        this.isAvailable = true;
+        this.subscriptions = new ballcap_admin_1.Collection();
     }
     parentReference() {
         return ballcap_admin_1.firestore.collection("commerce");
@@ -26,38 +28,54 @@ class TradeTransaction extends ballcap_admin_1.Doc {
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "shard", void 0);
+], Plan.prototype, "publishedBy", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "type", void 0);
+], Plan.prototype, "createdBy", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", ballcap_admin_1.DocumentReference)
+], Plan.prototype, "productReference", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "selledBy", void 0);
+], Plan.prototype, "currency", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Number)
+], Plan.prototype, "amount", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "purchasedBy", void 0);
+], Plan.prototype, "interval", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "orderReference", void 0);
+    __metadata("design:type", Number)
+], Plan.prototype, "intervalCount", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "productReference", void 0);
+    __metadata("design:type", Array)
+], Plan.prototype, "tiers", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "skuRefernece", void 0);
+    __metadata("design:type", String)
+], Plan.prototype, "tiersMode", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "itemReference", void 0);
+    __metadata("design:type", ballcap_admin_1.Timestamp)
+], Plan.prototype, "trialPeriodDays", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "stockReference", void 0);
-exports.TradeTransaction = TradeTransaction;
-//# sourceMappingURL=TradeTransaction.js.map
+    __metadata("design:type", Boolean)
+], Plan.prototype, "isAvailable", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Plan.prototype, "metadata", void 0);
+__decorate([
+    ballcap_admin_1.SubCollection,
+    __metadata("design:type", ballcap_admin_1.Collection)
+], Plan.prototype, "subscriptions", void 0);
+exports.Plan = Plan;
+//# sourceMappingURL=Plan.js.map

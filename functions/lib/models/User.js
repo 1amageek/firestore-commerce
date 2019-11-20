@@ -19,6 +19,8 @@ class User extends ballcap_admin_1.Doc {
         this.receivedOrders = new ballcap_admin_1.Collection();
         this.items = new ballcap_admin_1.Collection();
         this.tradeTransactions = new ballcap_admin_1.Collection();
+        this.subscriptions = new ballcap_admin_1.Collection();
+        this.subscribers = new ballcap_admin_1.Collection();
     }
     parentReference() {
         return ballcap_admin_1.firestore.collection("commerce");
@@ -48,5 +50,13 @@ __decorate([
     ballcap_admin_1.SubCollection,
     __metadata("design:type", ballcap_admin_1.Collection)
 ], User.prototype, "tradeTransactions", void 0);
+__decorate([
+    ballcap_admin_1.SubCollection,
+    __metadata("design:type", ballcap_admin_1.Collection)
+], User.prototype, "subscriptions", void 0);
+__decorate([
+    ballcap_admin_1.SubCollection,
+    __metadata("design:type", ballcap_admin_1.Collection)
+], User.prototype, "subscribers", void 0);
 exports.User = User;
 //# sourceMappingURL=User.js.map

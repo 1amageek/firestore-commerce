@@ -8,12 +8,17 @@ const tradestore_1 = require("@1amageek/tradestore");
 const config_1 = require("./config");
 const TradeController_1 = require("./TradeController");
 const StripeController_1 = require("./StripeController");
-firebase.initializeApp();
-ballcap_admin_1.initialize(firebase);
+if (firebase.apps.length === 0) {
+    firebase.initializeApp();
+    ballcap_admin_1.initialize(firebase);
+}
 const Account_1 = require("./models/Account");
 const User_1 = require("./models/User");
 const SKU_1 = require("./models/SKU");
+const Plan_1 = require("./models/Plan");
 const Order_1 = require("./models/Order");
+const Subscription_1 = require("./models/Subscription");
+const SubscriptionItem_1 = require("./models/SubscriptionItem");
 const Stock_1 = require("./models/Stock");
 const BalanceTransaction_1 = require("./models/BalanceTransaction");
 const TradeTransaction_1 = require("./models/TradeTransaction");
@@ -22,7 +27,7 @@ exports.createAccount = functions.https.onCall(async (data, context) => {
         // Throwing an HttpsError so that the client gets the error details.
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
-    const STRIPE_API_KEY = config_1.default.stripe.api_key;
+    const STRIPE_API_KEY = config_1.default.stripe.api_key || functions.config().stripe.api_key;
     if (!STRIPE_API_KEY) {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
     }
@@ -77,7 +82,7 @@ exports.checkout = functions.https.onCall(async (data, context) => {
         let paymentResult;
         try {
             // tslint:disable-next-line:no-shadowed-variable
-            const result = await manager.runTransaction(orderReference, {}, async (order, option, transaction) => {
+            const result = await manager.runTransaction(orderReference, paymentOptions, async (order, option, transaction) => {
                 if (order.paymentStatus !== tradestore_1.OrderPaymentStatus.none) {
                     return;
                 }
@@ -109,9 +114,9 @@ exports.checkout = functions.https.onCall(async (data, context) => {
                     manager.orderManager.update(order, {}, {}, transaction);
                 }
                 else {
-                    paymentResult = await manager.delegate.pay(order.currency, order.amount, order, paymentOptions);
-                    manager.balanceManager.charge(order.purchasedBy, order.documentReference, order.currency, order.amount, { [paymentOptions.vendorType]: paymentResult }, transaction);
-                    manager.orderManager.update(order, {}, { [paymentOptions.vendorType]: paymentResult }, transaction);
+                    paymentResult = await manager.delegate.charge(order.currency, order.amount, order, option);
+                    manager.balanceManager.charge(order.purchasedBy, order.documentReference, order.currency, order.amount, { [option.vendorType]: paymentResult }, transaction);
+                    manager.orderManager.update(order, {}, { [option.vendorType]: paymentResult }, transaction);
                 }
                 return tradeTransactions;
             });
@@ -125,6 +130,39 @@ exports.checkout = functions.https.onCall(async (data, context) => {
             }
             throw new functions.https.HttpsError('internal', error.message, { code: error.code });
         }
+    }
+    catch (error) {
+        throw error;
+    }
+});
+exports.subscribe = functions.https.onCall(async (data, context) => {
+    if (!context.auth) {
+        // Throwing an HttpsError so that the client gets the error details.
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
+    }
+    const uid = context.auth.uid;
+    const planReferencePaths = data['planReferences'];
+    const account = await new Account_1.Account(uid).fetch();
+    const customer = account.stripeID;
+    console.info(account);
+    if (!customer) {
+        throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.');
+    }
+    const promise = planReferencePaths.map(path => new Plan_1.Plan(path).fetch());
+    const plans = await Promise.all(promise);
+    const subscriptionOptions = {
+        vendorType: "stripe",
+        customer: customer
+    };
+    const controller = new tradestore_1.SubscriptionController(Subscription_1.Subscription.self(), SubscriptionItem_1.SubscriptionItem.model());
+    controller.delegate = new StripeController_1.StripeController();
+    const subscriber = new User_1.User(uid);
+    try {
+        await controller.subscribe(subscriber, plans, subscriptionOptions, async (subscription, option, transaction) => {
+            const result = await controller.delegate.subscribe(subscription, option);
+            subscription.result = result;
+            return subscription;
+        });
     }
     catch (error) {
         throw error;

@@ -11,53 +11,50 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 const tradestore_1 = require("@1amageek/tradestore");
-class TradeTransaction extends ballcap_admin_1.Doc {
+class SubscriptionItem extends ballcap_admin_1.Model {
     constructor() {
         super(...arguments);
-        this.shard = tradestore_1.randomShard(tradestore_1.DafaultShardCharacters);
-        this.type = tradestore_1.TradeTransactionType.unknown;
-        this.selledBy = '';
-        this.purchasedBy = '';
-    }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+        this.quantity = 0;
+        this.taxRates = 0;
+        this.amount = 0;
+        this.currency = tradestore_1.Currency.JPY;
     }
 }
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "shard", void 0);
+], SubscriptionItem.prototype, "subscribedBy", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "type", void 0);
+], SubscriptionItem.prototype, "publishedBy", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "selledBy", void 0);
+], SubscriptionItem.prototype, "createdBy", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", ballcap_admin_1.DocumentReference)
+], SubscriptionItem.prototype, "productReference", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", ballcap_admin_1.DocumentReference)
+], SubscriptionItem.prototype, "planReference", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Number)
+], SubscriptionItem.prototype, "quantity", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Number)
+], SubscriptionItem.prototype, "taxRates", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Number)
+], SubscriptionItem.prototype, "amount", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], TradeTransaction.prototype, "purchasedBy", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "orderReference", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "productReference", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "skuRefernece", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "itemReference", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.DocumentReference)
-], TradeTransaction.prototype, "stockReference", void 0);
-exports.TradeTransaction = TradeTransaction;
-//# sourceMappingURL=TradeTransaction.js.map
+], SubscriptionItem.prototype, "currency", void 0);
+exports.SubscriptionItem = SubscriptionItem;
+//# sourceMappingURL=SubscriptionItem.js.map

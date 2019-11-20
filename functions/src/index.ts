@@ -7,8 +7,10 @@ import config from './config'
 import { TradeController } from './TradeController'
 import { StripeController } from './StripeController'
 
-firebase.initializeApp()
-initialize(firebase)
+if (firebase.apps.length === 0) {
+	firebase.initializeApp()
+	initialize(firebase)
+}
 
 import { Account } from './models/Account'
 import { User } from './models/User'
@@ -168,6 +170,8 @@ export const subscribe = functions.https.onCall(async (data, context) => {
 	const account: Account = await new Account(uid).fetch()
 	const customer: string | undefined = account.stripeID
 
+	console.info(account.data().stripeID)
+
 	if (!customer) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.')
 	}
@@ -188,7 +192,6 @@ export const subscribe = functions.https.onCall(async (data, context) => {
 		await controller.subscribe(subscriber, plans, subscriptionOptions, async (subscription, option, transaction) => {
 			const result: Stripe.subscriptions.ISubscription = await controller.delegate!.subscribe(subscription, option)
 			subscription.result = result
-			console.info(result)
 			return subscription
 		})
 	} catch (error) {

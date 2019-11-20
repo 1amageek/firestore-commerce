@@ -43,7 +43,7 @@ class StripeController {
     async authorizeCancel(currency, amount, order, options) {
         throw new Error("Method not implemented.");
     }
-    async pay(currency, amount, order, options) {
+    async charge(currency, amount, order, options) {
         const stripe = this.stripe();
         const idempotency_key = order.id;
         const data = {
@@ -69,6 +69,28 @@ class StripeController {
             console.log(error);
             throw error;
         }
+    }
+    async subscribe(subscription, options) {
+        if (!options.customer) {
+            throw new Error("[StripeController] CustomerID is required for subscription.");
+        }
+        const stripe = this.stripe();
+        const customer = options.customer;
+        const data = {
+            customer: customer,
+            trial_from_plan: true,
+            metadata: options.metadata
+        };
+        data.items = subscription.items.map(item => {
+            return {
+                plan: item.planReference.id,
+                quantity: item.quantity
+            };
+        });
+        if (options.metadata) {
+            data.metadata = options.metadata;
+        }
+        return await stripe.subscriptions.create(data);
     }
     async refund(currency, amount, order, options, reason) {
         const stripe = this.stripe();
