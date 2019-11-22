@@ -5,8 +5,8 @@ import { Payout } from './Payout'
 
 export class Account extends Doc implements AccountProtocol<BalanceTransaction, Payout> {
 
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
+	static collectionReference(): CollectionReference {
+		return firestore.collection("commerce/1/accounts")
 	}
 
 	@Field stripeID?: string

@@ -1,24 +1,18 @@
-import * as functions from 'firebase-functions'
 import { PaymentDelegate, OrderItemProtocol, OrderProtocol, Currency, BalanceTransactionProtocol, AccountProtocol, PayoutProtocol, TransferOptions, PayoutOptions, PaymentOptions, SubscriptionItemProtocol, SubscriptionProtocol, SubscriptionOptions } from '@1amageek/tradestore'
 import * as Stripe from 'stripe'
-import config from './config'
 
 
 export class StripeController implements PaymentDelegate {
 
-	stripe() {
-		const STRIPE_API_KEY = config.stripe.api_key
-		if (!STRIPE_API_KEY) {
-			throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
-		}
-		const stripe = new Stripe(STRIPE_API_KEY)
-		return stripe
+	stripe: Stripe
+
+	constructor(apiKey: string) {
+		this.stripe = new Stripe(apiKey)
 	}
 
 	async authorize<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions) {
 		
-		const stripe = this.stripe()
-
+	
 		const idempotency_key = order.id
 		const data: Stripe.charges.IChargeCreationOptions = {
 			amount: order.amount,
@@ -37,7 +31,7 @@ export class StripeController implements PaymentDelegate {
 		}
 
 		try {
-			const charge = await stripe.charges.create(data, {
+			const charge = await this.stripe.charges.create(data, {
 				idempotency_key: idempotency_key
 			})
 			return charge
@@ -52,8 +46,6 @@ export class StripeController implements PaymentDelegate {
 	}
 
 	async charge<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions) {
-
-		const stripe = this.stripe()
 
 		const idempotency_key = order.id
 		const data: Stripe.charges.IChargeCreationOptions = {
@@ -73,7 +65,7 @@ export class StripeController implements PaymentDelegate {
 
 
 		try {
-			const charge = await stripe.charges.create(data, {
+			const charge = await this.stripe.charges.create(data, {
 				idempotency_key: idempotency_key
 			})
 			return charge
@@ -87,7 +79,6 @@ export class StripeController implements PaymentDelegate {
         if (!options.customer) {
             throw new Error("[StripeController] CustomerID is required for subscription.")
 		}
-		const stripe = this.stripe()
         const customer: string = options.customer
 
         const data: Stripe.subscriptions.ISubscriptionCreationOptions = {
@@ -106,12 +97,10 @@ export class StripeController implements PaymentDelegate {
         if (options.metadata) {
             data.metadata = options.metadata
         }
-        return await stripe.subscriptions.create(data)
+        return await this.stripe.subscriptions.create(data)
     }
 
 	async refund<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions, reason?: string | undefined) {
-
-		const stripe = this.stripe()
 
 		const transactionResults = order.transactionResults
 		const transactionResult = transactionResults[transactionResults.length - 1]
@@ -126,7 +115,7 @@ export class StripeController implements PaymentDelegate {
 		}
 
 		try {
-			return await stripe.charges.refund(charegeID, data, {
+			return await this.stripe.charges.refund(charegeID, data, {
 				idempotency_key: idempotency_key
 			})
 		} catch (error) {
@@ -135,8 +124,6 @@ export class StripeController implements PaymentDelegate {
 	}
 
 	async partRefund<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, orderItem: U, options: PaymentOptions, reason?: string | undefined) {
-		
-		const stripe = this.stripe()
 
 		const transactionResults = order.transactionResults
 		const transactionResult = transactionResults[transactionResults.length - 1]
@@ -152,7 +139,7 @@ export class StripeController implements PaymentDelegate {
 		}
 
 		try {
-			return await stripe.charges.refund(charegeID, data, {
+			return await this.stripe.charges.refund(charegeID, data, {
 				idempotency_key: idempotency_key
 			})
 		} catch (error) {
@@ -161,9 +148,7 @@ export class StripeController implements PaymentDelegate {
 	}
 
 	async transfer<OrderItem extends OrderItemProtocol, Order extends OrderProtocol<OrderItem>, BalanceTransaction extends BalanceTransactionProtocol, Payout extends PayoutProtocol, Account extends AccountProtocol<BalanceTransaction, Payout>>(currency: Currency, amount: number, order: Order, toAccount: Account, options: TransferOptions): Promise<any> {
-		
-		const stripe = this.stripe()
-		
+	
 		const idempotency_key = order.id
 		const destination = toAccount.accountInformation['stripe']['id']
 		const data: Stripe.transfers.ITransferCreationOptions = {
@@ -174,7 +159,7 @@ export class StripeController implements PaymentDelegate {
 		}
 
 		try {
-			const transfer = await stripe.transfers.create(data, {
+			const transfer = await this.stripe.transfers.create(data, {
 				idempotency_key: idempotency_key
 			})
 			return transfer

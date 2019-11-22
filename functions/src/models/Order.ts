@@ -4,8 +4,8 @@ import { OrderItem } from './OrderItem'
 
 export class Order extends Doc implements OrderProtocol<OrderItem> {
 
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
+	static collectionReference(): CollectionReference {
+		return firestore.collection("commerce/1/orders")
 	}
 
 	@Field parentID?: string

@@ -144,7 +144,7 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
     const planReferencePaths = data['planReferences'];
     const account = await new Account_1.Account(uid).fetch();
     const customer = account.stripeID;
-    console.info(account);
+    console.info(account.data().stripeID);
     if (!customer) {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.');
     }

@@ -14,8 +14,6 @@ const Test = functions({
   "./secret.json")
 
 ballcap.initialize(admin.firestore())
-
-
 import { User } from '../functions/src/models/User'
 import { Product } from '../functions/src/models/Product'
 // import { SKU } from '../functions/src/models/SKU'

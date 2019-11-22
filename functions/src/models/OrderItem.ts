@@ -1,12 +1,7 @@
-import { Model, File, Field, DocumentReference, firestore, CollectionReference } from '@1amageek/ballcap-admin'
+import { Model, File, Field, DocumentReference } from '@1amageek/ballcap-admin'
 import { OrderItemProtocol, Currency, OrderItemType, OrderItemStatus } from '@1amageek/tradestore'
 
 export class OrderItem extends Model implements OrderItemProtocol {
-
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
-	}
-	
 	@Field name?: string
 	@Field thumbnailImage?: File
 	@Field createdBy!: string

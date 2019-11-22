@@ -9,8 +9,8 @@ import { SubscriptionItem } from './SubscriptionItem'
 
 export class User extends Doc implements Tradable<Order, OrderItem, TradeTransaction, Subscription, SubscriptionItem>, Publishable<User, Subscription, SubscriptionItem> {
 
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
+	static collectionReference(): CollectionReference {
+		return firestore.collection("commerce/1/users")
 	}
 
     @Field isAvailable: boolean = false

@@ -4,9 +4,10 @@ import { Plan } from './Plan'
 
 export class Product extends Doc {
 
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
+	static collectionReference(): CollectionReference {
+		return firestore.collection("commerce/1/products")
 	}
+	
 	@Field metadata?: any
     @SubCollection SKUs: Collection<SKU> = new Collection()
     @SubCollection plans: Collection<Plan> = new Collection()

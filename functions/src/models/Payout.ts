@@ -3,8 +3,8 @@ import { PayoutProtocol, Currency, PayoutStatus, TransactionResult } from '@1ama
 
 export class Payout extends Doc implements PayoutProtocol {
 
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
+	static collectionReference(): CollectionReference {
+		return firestore.collection("commerce/1/payouts")
 	}
 
 	@Field currency: Currency = Currency.JPY

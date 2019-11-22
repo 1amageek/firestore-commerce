@@ -4,8 +4,8 @@ import { SubscriptionItem } from './SubscriptionItem'
 
 export class Subscription extends Doc implements SubscriptionProtocol<SubscriptionItem> {
 
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
+	static collectionReference(): CollectionReference {
+		return firestore.collection("commerce/1/subscriptions")
 	}
 
 	@Field shard: ShardType = randomShard(DafaultShardCharacters)

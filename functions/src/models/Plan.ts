@@ -5,8 +5,8 @@ import { SubscriptionItem } from './SubscriptionItem'
 
 export class Plan extends Doc implements PlanProtocol<Subscription, SubscriptionItem> {
 
-	parentReference(): CollectionReference {
-		return firestore.collection("commerce")
+	static collectionReference(): CollectionReference {
+		return firestore.collection("commerce/1/plans")
 	}
 
 	@Field publishedBy!: string
