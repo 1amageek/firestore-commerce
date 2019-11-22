@@ -23,9 +23,6 @@ class OrderItem extends ballcap_admin_1.Model {
         this.amount = 0;
         this.status = tradestore_1.OrderItemStatus.none;
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
-    }
 }
 __decorate([
     ballcap_admin_1.Field,

@@ -21,8 +21,8 @@ class Payout extends ballcap_admin_1.Doc {
         this.transactionResults = [];
         this.isCancelled = false;
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+    static collectionReference() {
+        return ballcap_admin_1.firestore.collection("commerce/1/payouts");
     }
 }
 __decorate([

@@ -14,6 +14,7 @@ const tradestore_1 = require("@1amageek/tradestore");
 class Order extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
+        this.shard = tradestore_1.randomShard(tradestore_1.DafaultShardCharacters);
         this.assets = [];
         this.transferredTo = [];
         this.currency = tradestore_1.Currency.JPY;
@@ -24,10 +25,14 @@ class Order extends ballcap_admin_1.Doc {
         this.transactionResults = [];
         this.isCancelled = false;
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+    static collectionReference() {
+        return ballcap_admin_1.firestore.collection("commerce/1/orders");
     }
 }
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], Order.prototype, "shard", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)

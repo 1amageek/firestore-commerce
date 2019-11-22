@@ -21,8 +21,8 @@ class Plan extends ballcap_admin_1.Doc {
         this.isAvailable = true;
         this.subscriptions = new ballcap_admin_1.Collection();
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+    static collectionReference() {
+        return ballcap_admin_1.firestore.collection("commerce/1/plans");
     }
 }
 __decorate([

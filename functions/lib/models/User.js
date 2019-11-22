@@ -22,8 +22,8 @@ class User extends ballcap_admin_1.Doc {
         this.subscriptions = new ballcap_admin_1.Collection();
         this.subscribers = new ballcap_admin_1.Collection();
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+    static collectionReference() {
+        return ballcap_admin_1.firestore.collection("commerce/1/users");
     }
 }
 __decorate([

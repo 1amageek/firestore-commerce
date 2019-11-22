@@ -16,8 +16,8 @@ class Product extends ballcap_admin_1.Doc {
         this.SKUs = new ballcap_admin_1.Collection();
         this.plans = new ballcap_admin_1.Collection();
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+    static collectionReference() {
+        return ballcap_admin_1.firestore.collection("commerce/1/products");
     }
 }
 __decorate([

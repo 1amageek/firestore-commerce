@@ -22,8 +22,8 @@ class Subscription extends ballcap_admin_1.Doc {
         this.items = [];
         this.status = tradestore_1.SubscriptionStatus.incomplete;
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+    static collectionReference() {
+        return ballcap_admin_1.firestore.collection("commerce/1/subscriptions");
     }
 }
 __decorate([

@@ -56,6 +56,10 @@ exports.checkout = functions.https.onCall(async (data, context) => {
         // Throwing an HttpsError so that the client gets the error details.
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
+    const STRIPE_API_KEY = config_1.default.stripe.api_key || functions.config().stripe.api_key;
+    if (!STRIPE_API_KEY) {
+        throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
+    }
     const uid = context.auth.uid;
     const orderReferencePath = data['orderReference'];
     const source = data['source'];
@@ -67,7 +71,7 @@ exports.checkout = functions.https.onCall(async (data, context) => {
     }
     try {
         const manager = new tradestore_1.Manager(Stock_1.Stock.self(), SKU_1.SKU.self(), Order_1.Order.self(), TradeTransaction_1.TradeTransaction.self(), BalanceTransaction_1.BalanceTransaction.self(), User_1.User.self(), Account_1.Account.self());
-        manager.delegate = new StripeController_1.StripeController();
+        manager.delegate = new StripeController_1.StripeController(STRIPE_API_KEY);
         manager.tradeDelegate = new TradeController_1.TradeController();
         const paymentOptions = {
             vendorType: 'stripe',
@@ -120,7 +124,6 @@ exports.checkout = functions.https.onCall(async (data, context) => {
                 }
                 return tradeTransactions;
             });
-            console.log(result);
             return { tradeTransactions: result };
         }
         catch (error) {
@@ -140,29 +143,35 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
         // Throwing an HttpsError so that the client gets the error details.
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
+    const STRIPE_API_KEY = config_1.default.stripe.api_key || functions.config().stripe.api_key;
+    if (!STRIPE_API_KEY) {
+        throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
+    }
     const uid = context.auth.uid;
     const planReferencePaths = data['planReferences'];
     const account = await new Account_1.Account(uid).fetch();
     const customer = account.stripeID;
-    console.info(account.data().stripeID);
     if (!customer) {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.');
     }
-    const promise = planReferencePaths.map(path => new Plan_1.Plan(path).fetch());
+    const promise = planReferencePaths.map(path => {
+        return new Plan_1.Plan(firebase.firestore().doc(path)).fetch();
+    });
     const plans = await Promise.all(promise);
     const subscriptionOptions = {
         vendorType: "stripe",
         customer: customer
     };
     const controller = new tradestore_1.SubscriptionController(Subscription_1.Subscription.self(), SubscriptionItem_1.SubscriptionItem.model());
-    controller.delegate = new StripeController_1.StripeController();
+    controller.delegate = new StripeController_1.StripeController(STRIPE_API_KEY);
     const subscriber = new User_1.User(uid);
     try {
-        await controller.subscribe(subscriber, plans, subscriptionOptions, async (subscription, option, transaction) => {
+        const subscription = await controller.subscribe(subscriber, plans, subscriptionOptions, async (subscription, option, transaction) => {
             const result = await controller.delegate.subscribe(subscription, option);
             subscription.result = result;
             return subscription;
         });
+        return subscription.data();
     }
     catch (error) {
         throw error;

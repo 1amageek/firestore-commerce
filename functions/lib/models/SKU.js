@@ -22,8 +22,8 @@ class SKU extends ballcap_admin_1.Doc {
         this.isPrivated = false;
         this.stocks = new ballcap_admin_1.Collection();
     }
-    parentReference() {
-        return ballcap_admin_1.firestore.collection("commerce");
+    static collectionReference() {
+        return ballcap_admin_1.firestore.collection("commerce/1/SKUs");
     }
 }
 __decorate([
