@@ -8,20 +8,12 @@ export class Item extends Doc implements ItemProtocol {
 	}
 
 	@Field isCancelled: boolean = false
-
 	@Field isPrivated: boolean = false
-
 	@Field passTypeIdentifier!: string
-
 	@Field selledBy!: string
-
 	@Field purchasedBy!: string
-
 	@Field orderReference!: DocumentReference
-
 	@Field productReference?: DocumentReference
-
 	@Field skuReference!: DocumentReference
-
 	@Field stockReference?: DocumentReference
 }
