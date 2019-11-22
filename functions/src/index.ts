@@ -98,14 +98,12 @@ export const checkout = functions.https.onCall(async (data, context) => {
 					return transactions.map(tradeTransaction => {
 						let productReference = null
 						let stockReference = null
-
 						if (tradeTransaction.productReference) {
 							productReference = tradeTransaction.productReference.path
 						}
 						if (tradeTransaction.stockReference) {
 							stockReference = tradeTransaction.stockReference.path
 						}
-
 						return {
 							type: tradeTransaction.type,
 							selledBy: tradeTransaction.selledBy,
