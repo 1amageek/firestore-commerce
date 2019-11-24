@@ -43,11 +43,13 @@ export const createAccount = functions.https.onCall(async (data, context) => {
 		account.country = cuntory
 		account.stripeID = customer.id
 		const user: User = new User(uid)
+		user.isAvailable = true
 		user.country = cuntory
 		const batch: Batch = new Batch()
 		batch.save(account)
 		batch.save(user)
 		await batch.commit()
+		return user.data()
 	} catch (error) {
 		console.error(error)
 		throw new functions.https.HttpsError('internal', error.stack)
