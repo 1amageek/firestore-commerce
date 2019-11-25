@@ -25,6 +25,8 @@ import { Payout } from './models/Payout'
 import { BalanceTransaction } from './models/BalanceTransaction'
 import { TradeTransaction } from './models/TradeTransaction'
 
+export { Account, User, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction }
+
 export const createAccount = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
 		// Throwing an HttpsError so that the client gets the error details.

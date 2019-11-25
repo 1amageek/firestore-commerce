@@ -40,11 +40,13 @@ exports.createAccount = functions.https.onCall(async (data, context) => {
         account.country = cuntory;
         account.stripeID = customer.id;
         const user = new User_1.User(uid);
+        user.isAvailable = true;
         user.country = cuntory;
         const batch = new ballcap_admin_1.Batch();
         batch.save(account);
         batch.save(user);
         await batch.commit();
+        return user.data();
     }
     catch (error) {
         console.error(error);
