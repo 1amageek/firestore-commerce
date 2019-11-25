@@ -13,15 +13,27 @@ if (firebase.apps.length === 0) {
     ballcap_admin_1.initialize(firebase);
 }
 const Account_1 = require("./models/Account");
+exports.Account = Account_1.Account;
 const User_1 = require("./models/User");
+exports.User = User_1.User;
 const SKU_1 = require("./models/SKU");
+exports.SKU = SKU_1.SKU;
 const Plan_1 = require("./models/Plan");
+exports.Plan = Plan_1.Plan;
 const Order_1 = require("./models/Order");
+exports.Order = Order_1.Order;
+const OrderItem_1 = require("./models/OrderItem");
+exports.OrderItem = OrderItem_1.OrderItem;
 const Subscription_1 = require("./models/Subscription");
+exports.Subscription = Subscription_1.Subscription;
 const SubscriptionItem_1 = require("./models/SubscriptionItem");
+exports.SubscriptionItem = SubscriptionItem_1.SubscriptionItem;
 const Stock_1 = require("./models/Stock");
+exports.Stock = Stock_1.Stock;
 const BalanceTransaction_1 = require("./models/BalanceTransaction");
+exports.BalanceTransaction = BalanceTransaction_1.BalanceTransaction;
 const TradeTransaction_1 = require("./models/TradeTransaction");
+exports.TradeTransaction = TradeTransaction_1.TradeTransaction;
 exports.createAccount = functions.https.onCall(async (data, context) => {
     if (!context.auth) {
         // Throwing an HttpsError so that the client gets the error details.
