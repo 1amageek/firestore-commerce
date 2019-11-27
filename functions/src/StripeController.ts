@@ -68,26 +68,26 @@ export class StripeController implements PaymentDelegate {
 	}
 
 	async subscribe<U extends SubscriptionItemProtocol, T extends SubscriptionProtocol<U>>(subscription: T, options: SubscriptionOptions): Promise<any> {
-        if (!options.customer) {
-            throw new Error("[StripeController] CustomerID is required for subscription.")
+		if (!options.customer) {
+			throw new Error("[StripeController] CustomerID is required for subscription.")
 		}
-        const customer: string = options.customer
-        const data: Stripe.subscriptions.ISubscriptionCreationOptions = {
-            customer: customer,
+		const customer: string = options.customer
+		const data: Stripe.subscriptions.ISubscriptionCreationOptions = {
+			customer: customer,
 			trial_from_plan: true,
 			metadata: options.metadata
-        }
-        data.items = subscription.items.map(item => {
-            return {
-                plan: item.planReference.id,
-                quantity: item.quantity
-            }
-        })
-        if (options.metadata) {
-            data.metadata = options.metadata
-        }
-        return await this.stripe.subscriptions.create(data)
-    }
+		}
+		data.items = subscription.items.map(item => {
+			return {
+				plan: item.planReference.id,
+				quantity: item.quantity
+			}
+		})
+		if (options.metadata) {
+			data.metadata = options.metadata
+		}
+		return await this.stripe.subscriptions.create(data)
+	}
 
 	async refund<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions, reason?: string | undefined) {
 

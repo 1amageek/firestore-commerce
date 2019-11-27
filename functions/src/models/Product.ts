@@ -16,6 +16,6 @@ export class Product extends Doc {
 	@Field description?: string
 	@Field isAvailable: boolean = true
 	@Field metadata?: any
-    @SubCollection SKUs: Collection<SKU> = new Collection()
-    @SubCollection plans: Collection<Plan> = new Collection()
+	@SubCollection SKUs: Collection<SKU> = new Collection()
+	@SubCollection plans: Collection<Plan> = new Collection()
 }

@@ -1,6 +1,6 @@
 root = true
 
-[functions/{src,scripts}/**.{tsx,jsx,ts,json,js}]
+[*.{tsx,jsx,ts,json,js}]
 end_of_line = crlf
 charset = utf-8
 trim_trailing_whitespace = true

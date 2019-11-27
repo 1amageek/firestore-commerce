@@ -14,14 +14,14 @@ export class User extends Doc implements Tradable<Order, OrderItem, TradeTransac
 		return firestore.collection("commerce/1/users")
 	}
 
-    @Field isAvailable: boolean = false
-    @Field country: string = "JP"
+	@Field isAvailable: boolean = false
+	@Field country: string = "JP"
 
-    @SubCollection products: Collection<Product> = new Collection()
-    @SubCollection orders: Collection<Order> = new Collection()
-    @SubCollection receivedOrders: Collection<Order> = new Collection()
-    @SubCollection items: Collection<Item> = new Collection()
-    @SubCollection tradeTransactions: Collection<TradeTransaction> = new Collection()
-    @SubCollection subscriptions: Collection<Subscription> = new Collection()
-    @SubCollection subscribers: Collection<User> = new Collection()
+	@SubCollection products: Collection<Product> = new Collection()
+	@SubCollection orders: Collection<Order> = new Collection()
+	@SubCollection receivedOrders: Collection<Order> = new Collection()
+	@SubCollection items: Collection<Item> = new Collection()
+	@SubCollection tradeTransactions: Collection<TradeTransaction> = new Collection()
+	@SubCollection subscriptions: Collection<Subscription> = new Collection()
+	@SubCollection subscribers: Collection<User> = new Collection()
 }
