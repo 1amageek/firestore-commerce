@@ -4,6 +4,7 @@ import { TradeTransaction } from './TradeTransaction'
 import { Item } from './Item'
 import { OrderItem } from './OrderItem'
 import { Order } from './Order'
+import { Product } from './Product'
 import { Subscription } from './Subscription'
 import { SubscriptionItem } from './SubscriptionItem'
 
@@ -16,6 +17,7 @@ export class User extends Doc implements Tradable<Order, OrderItem, TradeTransac
     @Field isAvailable: boolean = false
     @Field country: string = "JP"
 
+    @SubCollection products: Collection<Product> = new Collection()
     @SubCollection orders: Collection<Order> = new Collection()
     @SubCollection receivedOrders: Collection<Order> = new Collection()
     @SubCollection items: Collection<Item> = new Collection()

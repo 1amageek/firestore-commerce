@@ -9,11 +9,7 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2018",
-    "allowJs": true,
-    "baseUrl": "./",
-    "paths": {
-      "@*": ["functions/src/*"]
-    }
+    "allowJs": true
   },
   "compileOnSave": true,
   "include": ["functions/src"]

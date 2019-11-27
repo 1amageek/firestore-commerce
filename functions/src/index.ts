@@ -14,6 +14,7 @@ if (firebase.apps.length === 0) {
 
 import { Account } from './models/Account'
 import { User } from './models/User'
+import { Product } from './models/Product'
 import { SKU } from './models/SKU'
 import { Plan } from './models/Plan'
 import { Order } from './models/Order'
@@ -25,11 +26,16 @@ import { Payout } from './models/Payout'
 import { BalanceTransaction } from './models/BalanceTransaction'
 import { TradeTransaction } from './models/TradeTransaction'
 
-export { Account, User, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction }
+import * as FirestoreTrigger from './firestore'
 
-export const createAccount = functions.https.onCall(async (data, context) => {
+// Commerce documents.
+export { Account, User, Product, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction }
+
+// Cloud Firestore triggered functions.
+export const firestore = { ...FirestoreTrigger }
+
+export const accountCreate = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
-		// Throwing an HttpsError so that the client gets the error details.
 		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
 	}
 	const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
@@ -38,7 +44,7 @@ export const createAccount = functions.https.onCall(async (data, context) => {
 	}
 	const uid: string = context.auth.uid
 	const stripe = new Stripe(STRIPE_API_KEY)
-	const cuntory: string = data['cuntory']
+	const cuntory: string = data.country || 'JP'
 	try {
 		const customer = await stripe.customers.create({ description: uid })
 		const account: Account = new Account(uid)
@@ -60,7 +66,6 @@ export const createAccount = functions.https.onCall(async (data, context) => {
 
 export const checkout = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
-		// Throwing an HttpsError so that the client gets the error details.
 		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
 	}
 	const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
@@ -152,7 +157,6 @@ export const checkout = functions.https.onCall(async (data, context) => {
 
 export const subscribe = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
-		// Throwing an HttpsError so that the client gets the error details.
 		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
 	}
 	const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key

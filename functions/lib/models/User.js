@@ -15,6 +15,7 @@ class User extends ballcap_admin_1.Doc {
         super(...arguments);
         this.isAvailable = false;
         this.country = "JP";
+        this.products = new ballcap_admin_1.Collection();
         this.orders = new ballcap_admin_1.Collection();
         this.receivedOrders = new ballcap_admin_1.Collection();
         this.items = new ballcap_admin_1.Collection();
@@ -34,6 +35,10 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
 ], User.prototype, "country", void 0);
+__decorate([
+    ballcap_admin_1.SubCollection,
+    __metadata("design:type", ballcap_admin_1.Collection)
+], User.prototype, "products", void 0);
 __decorate([
     ballcap_admin_1.SubCollection,
     __metadata("design:type", ballcap_admin_1.Collection)

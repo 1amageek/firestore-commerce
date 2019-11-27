@@ -13,6 +13,8 @@ const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 class Product extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
+        this.type = 'good';
+        this.isAvailable = true;
         this.SKUs = new ballcap_admin_1.Collection();
         this.plans = new ballcap_admin_1.Collection();
     }
@@ -20,6 +22,26 @@ class Product extends ballcap_admin_1.Doc {
         return ballcap_admin_1.firestore.collection("commerce/1/products");
     }
 }
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], Product.prototype, "type", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], Product.prototype, "name", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], Product.prototype, "caption", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], Product.prototype, "description", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Boolean)
+], Product.prototype, "isAvailable", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Object)
