@@ -7,9 +7,6 @@ import { SKU } from '../models/SKU'
 export const onCreate = functions.firestore
 	.document('/commerce/{version}/users/{userID}/products/{productID}/SKUs/{skuID}')
 	.onCreate(async (snapshot, context) => {
-		if (!context.auth) {
-			throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
-		}
 		const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
 		if (!STRIPE_API_KEY) {
 			throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
@@ -39,9 +36,6 @@ export const onCreate = functions.firestore
 export const onUpdate = functions.firestore
 	.document('/commerce/{version}/users/{userID}/products/{productID}/SKUs/{skuID}')
 	.onUpdate(async (snapshot, context) => {
-		if (!context.auth) {
-			throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
-		}
 		const sku: SKU = SKU.fromSnapshot(snapshot.after)
 		if (!sku.isAvailable) {
 			return
