@@ -1,6 +1,6 @@
 import { Doc, Field, Collection, SubCollection, firestore, CollectionReference, DocumentReference, Timestamp } from '@1amageek/ballcap-admin'
 import { PlanProtocol, Currency, TiersMode, Tier, Interval } from '@1amageek/tradestore'
-import { Subscription } from './subscription'
+import { Subscription } from './Subscription'
 import { SubscriptionItem } from './SubscriptionItem'
 
 export class Plan extends Doc implements PlanProtocol<Subscription, SubscriptionItem> {

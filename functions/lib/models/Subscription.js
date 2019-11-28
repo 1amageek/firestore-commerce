@@ -83,4 +83,4 @@ __decorate([
     __metadata("design:type", Object)
 ], Subscription.prototype, "result", void 0);
 exports.Subscription = Subscription;
-//# sourceMappingURL=subscription.js.map
+//# sourceMappingURL=Subscription.js.map
