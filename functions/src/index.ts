@@ -1,17 +1,17 @@
 import * as functions from 'firebase-functions'
-import * as firebase from 'firebase-admin'
+import * as admin from 'firebase-admin'
 import * as Stripe from 'stripe'
 import { initialize, Batch } from '@1amageek/ballcap-admin'
 import { Manager, PaymentOptions, OrderPaymentStatus, TradestoreError, SubscriptionController, SubscriptionOptions } from '@1amageek/tradestore'
 import config from './config'
-import { TradeController } from './TradeController'
-import { StripeController } from './StripeController'
 
-if (firebase.apps.length === 0) {
-	firebase.initializeApp()
-	initialize(firebase)
+if (admin.apps.length === 0) {
+	const firebase = admin.initializeApp()
+	initialize(firebase.firestore())
 }
 
+import { TradeController } from './TradeController'
+import { StripeController } from './StripeController'
 import { Account } from './models/Account'
 import { User } from './models/User'
 import { Product } from './models/Product'
@@ -75,7 +75,7 @@ export const checkout = functions.https.onCall(async (data, context) => {
 	const uid: string = context.auth.uid
 	const orderReferencePath = data['orderReference']
 	const source: string = data['source']
-	const orderReference: firebase.firestore.DocumentReference = firebase.firestore().doc(orderReferencePath)
+	const orderReference: admin.firestore.DocumentReference = admin.firestore().doc(orderReferencePath)
 	const account: Account = await new Account(uid).fetch()
 	const customer: string | undefined = account.stripeID
 	if (!customer) {
@@ -171,7 +171,7 @@ export const subscribe = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.')
 	}
 	const promise: Promise<Plan>[] = planReferencePaths.map(path => {
-		return new Plan(firebase.firestore().doc(path)).fetch()
+		return new Plan(admin.firestore().doc(path)).fetch()
 	})
 	const plans: Plan[] = await Promise.all(promise)
 	const subscriptionOptions: SubscriptionOptions = {

@@ -52,11 +52,11 @@ __decorate([
 ], Subscription.prototype, "intervalCount", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", Object)
+    __metadata("design:type", ballcap_admin_1.Timestamp)
 ], Subscription.prototype, "startAt", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", Object)
+    __metadata("design:type", ballcap_admin_1.Timestamp)
 ], Subscription.prototype, "canceledAt", void 0);
 __decorate([
     ballcap_admin_1.Field,
@@ -64,7 +64,7 @@ __decorate([
 ], Subscription.prototype, "cancelAtPeriodEnd", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", Object)
+    __metadata("design:type", ballcap_admin_1.Timestamp)
 ], Subscription.prototype, "endedAt", void 0);
 __decorate([
     ballcap_admin_1.Field,

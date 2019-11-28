@@ -1,3 +1,26 @@
+process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080'
+import * as admin from '@firebase/testing'
+import * as functions from "firebase-functions-test"
+
+const firebase = admin.initializeTestApp({
+	projectId: "test-project",
+	auth: { uid: "test-user" }
+})
+
+console.info(firebase.firestore())
+
+describe("Firestore triggerd test", () => {
+
+	test("aa", async () => {
+		const doc = firebase.firestore().doc("a/wwwwwwd")
+		await doc.set({ a: "b" })
+
+		const result = await doc.get()
+		console.log(doc.path, result.data())
+	})
+
+})
+
 // import * as admin from 'firebase-admin'
 // import * as ballcap from '@1amageek/ballcap-admin'
 // import * as functions from "firebase-functions-test"
@@ -62,7 +85,7 @@
 // 		plan1.amount = 1500
 // 		plan1.interval = Interval.month
 // 		plan1.intervalCount = 1
-// 		plan1.productReference = product.documentReference 
+// 		plan1.productReference = product.documentReference
 
 // 		beforeAll(async () => {
 // 			const productCreateOptions: Stripe.products.IProductCreationOptions = {

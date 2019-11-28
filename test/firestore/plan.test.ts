@@ -3,7 +3,7 @@ import * as ballcap from '@1amageek/ballcap-admin'
 import * as functions from "firebase-functions-test"
 import * as Stripe from 'stripe'
 import * as sinon from 'sinon'
-import * as index from "../../functions/src/index"
+
 import config from "../config"
 
 const Test = functions({
@@ -14,13 +14,9 @@ const Test = functions({
 	"./secret.json")
 
 const adminInitStub = sinon.stub(admin, 'initializeApp')
-admin.initializeApp({
-	databaseURL: 'http://localhost:8080',
-	storageBucket: 'my-project.appspot.com',
-	projectId: 'my-project',
-})
 ballcap.initialize(admin.firestore())
 
+import * as index from "../../functions/src/index"
 import { Currency, Interval } from '@1amageek/tradestore'
 import { User } from '../../functions/src/models/User'
 import { Product } from '../../functions/src/models/Product'

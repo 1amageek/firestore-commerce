@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
-const firebase = require("firebase-admin");
+const admin = require("firebase-admin");
 const Stripe = require("stripe");
 const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 const tradestore_1 = require("@1amageek/tradestore");
 const config_1 = require("./config");
+if (admin.apps.length === 0) {
+    const firebase = admin.initializeApp();
+    ballcap_admin_1.initialize(firebase.firestore());
+}
 const TradeController_1 = require("./TradeController");
 const StripeController_1 = require("./StripeController");
-if (firebase.apps.length === 0) {
-    firebase.initializeApp();
-    ballcap_admin_1.initialize(firebase);
-}
 const Account_1 = require("./models/Account");
 exports.Account = Account_1.Account;
 const User_1 = require("./models/User");
@@ -80,7 +80,7 @@ exports.checkout = functions.https.onCall(async (data, context) => {
     const uid = context.auth.uid;
     const orderReferencePath = data['orderReference'];
     const source = data['source'];
-    const orderReference = firebase.firestore().doc(orderReferencePath);
+    const orderReference = admin.firestore().doc(orderReferencePath);
     const account = await new Account_1.Account(uid).fetch();
     const customer = account.stripeID;
     if (!customer) {
@@ -171,7 +171,7 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.');
     }
     const promise = planReferencePaths.map(path => {
-        return new Plan_1.Plan(firebase.firestore().doc(path)).fetch();
+        return new Plan_1.Plan(admin.firestore().doc(path)).fetch();
     });
     const plans = await Promise.all(promise);
     const subscriptionOptions = {

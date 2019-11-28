@@ -14,10 +14,10 @@ export class Subscription extends Doc implements SubscriptionProtocol<Subscripti
 	@Field createdBy!: string
 	@Field interval: Interval = Interval.month
 	@Field intervalCount: number = 1
-	@Field startAt: Timestamp | FieldValue = FieldValue.serverTimestamp()
-	@Field canceledAt?: Timestamp | FieldValue;
+	@Field startAt: Timestamp = FieldValue.serverTimestamp()
+	@Field canceledAt?: Timestamp
 	@Field cancelAtPeriodEnd: boolean = false
-	@Field endedAt?: Timestamp | FieldValue;
+	@Field endedAt?: Timestamp
 	@Field items: SubscriptionItem[] = []
 	@Field status: SubscriptionStatus = SubscriptionStatus.incomplete
 	@Field trial?: Period

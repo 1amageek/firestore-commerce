@@ -29,7 +29,13 @@ exports.onCreate = functions.firestore
             product_path: sku.parent.parent.path
         }
     };
-    await stripe.skus.create(helper_1.nullFilter(data));
+    try {
+        await stripe.skus.create(helper_1.nullFilter(data));
+    }
+    catch (error) {
+        sku.isAvailable = false;
+        await sku.update();
+    }
 });
 exports.onUpdate = functions.firestore
     .document('/commerce/{version}/users/{userID}/products/{productID}/SKUs/{skuID}')
@@ -37,11 +43,14 @@ exports.onUpdate = functions.firestore
     if (!context.auth) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
+    const sku = SKU_1.SKU.fromSnapshot(snapshot.after);
+    if (!sku.isAvailable) {
+        return;
+    }
     const STRIPE_API_KEY = config_1.default.stripe.api_key || functions.config().stripe.api_key;
     if (!STRIPE_API_KEY) {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
     }
-    const sku = SKU_1.SKU.fromSnapshot(snapshot.after);
     const stripe = new Stripe(STRIPE_API_KEY);
     const data = {
         inventory: sku.inventory,
@@ -53,6 +62,12 @@ exports.onUpdate = functions.firestore
             product_path: sku.parent.parent.path
         }
     };
-    await stripe.skus.update(sku.path, helper_1.nullFilter(data));
+    try {
+        await stripe.skus.update(sku.id, helper_1.nullFilter(data));
+    }
+    catch (error) {
+        sku.isAvailable = false;
+        await sku.update();
+    }
 });
 //# sourceMappingURL=SKU.js.map

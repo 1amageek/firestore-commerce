@@ -1,4 +1,4 @@
-import { Doc, Timestamp, FieldValue, CollectionReference } from '@1amageek/ballcap-admin';
+import { Doc, Timestamp, CollectionReference } from '@1amageek/ballcap-admin';
 import { ShardType, Interval, Period, SubscriptionProtocol, SubscriptionStatus, SubscriptionResult } from '@1amageek/tradestore';
 import { SubscriptionItem } from './SubscriptionItem';
 export declare class Subscription extends Doc implements SubscriptionProtocol<SubscriptionItem> {
@@ -9,10 +9,10 @@ export declare class Subscription extends Doc implements SubscriptionProtocol<Su
     createdBy: string;
     interval: Interval;
     intervalCount: number;
-    startAt: Timestamp | FieldValue;
-    canceledAt?: Timestamp | FieldValue;
+    startAt: Timestamp;
+    canceledAt?: Timestamp;
     cancelAtPeriodEnd: boolean;
-    endedAt?: Timestamp | FieldValue;
+    endedAt?: Timestamp;
     items: SubscriptionItem[];
     status: SubscriptionStatus;
     trial?: Period;

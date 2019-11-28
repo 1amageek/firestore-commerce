@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
 import { nullFilter } from './helper'
 import config from '../config'
+import { firestore } from '@1amageek/ballcap-admin'
 import { Product } from '../models/Product'
 
 
@@ -31,8 +32,8 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.products.create(nullFilter(data))
 		} catch (error) {
-			product.isAvailable = false
-			await product.update()
+			console.error(error)
+			await firestore.doc(product.path).set({ isAvailable: false }, { merge: true })
 		}
 	})
 
@@ -63,7 +64,7 @@ export const onUpdate = functions.firestore
 		try {
 			await stripe.products.update(product.id, nullFilter(data))
 		} catch (error) {
-			product.isAvailable = false
-			await product.update()
+			console.error(error)
+			await firestore.doc(product.path).set({ isAvailable: false }, { merge: true })
 		}
 	})
