@@ -4,7 +4,6 @@ import { nullFilter } from './helper'
 import config from '../config'
 import { Product } from '../models/Product'
 
-
 export const onCreate = functions.firestore
 	.document('/commerce/{version}/users/{userID}/products/{productID}')
 	.onCreate(async (snapshot, context) => {
