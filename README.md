@@ -13,10 +13,10 @@ firebase functions:config:set stripe.api_key="YOUR_STRIPE_API_KEY"
 
 ### Quick start
 
-To start selling, first create a `Product` and create a` SKU` or `Plan` in its SubCollection.
+To start selling, first create a `Product` and create a`SKU` or `Plan` in its SubCollection.
 `SKU` is an object for selling __Good__, and `Plan` is an object for __Subscription__.
 
-When you save `Product`,`SKU`,` Plan`, an object with the same ID is automatically created.
+When you save `Product`, `SKU`, `Plan`, an object with the same ID is automatically created.
 If an error occurs in Stripe, the data in Firestore is updated with `isAvailable = false`.
 
 ### Create Product
