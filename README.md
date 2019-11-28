@@ -13,13 +13,26 @@ firebase functions:config:set stripe.api_key="YOUR_STRIPE_API_KEY"
 
 ### Quick start
 
+#### setup
+
+```
+npm add @1amageek/firestore-commerce
+```
+
+Add the following to CloudFunctions index.ts:
+
+```typescript:index.ts
+import * as Commerce from '@1amageek/firestore-commerce'
+export const commerce = { ...Commerce }
+```
+
 To start selling, first create a `Product` and create a`SKU` or `Plan` in its SubCollection.
 `SKU` is an object for selling __Good__, and `Plan` is an object for __Subscription__.
 
 When you save `Product`, `SKU`, `Plan`, an object with the same ID is automatically created.
 If an error occurs in Stripe, the data in Firestore is updated with `isAvailable = false`.
 
-### Create Product
+#### Create Product
 
 When you save `Product`, a Stripe Product with a common ID is automatically created.
 
@@ -30,7 +43,7 @@ product.type = "service"
 product.name = "test-product"
 ```
 
-### Create SKU
+#### Create SKU
 
 ```typescript
 const sku: SKU = new SKU(product.SKUs.collectionReference.doc())
@@ -39,7 +52,7 @@ sku.currency = Currency.JPY
 sku.amount = 1000
 ```
 
-### Create Plan
+#### Create Plan
 
 ```typescript
 const plan: Plan = new Plan(product.plans.collectionReference.doc())
