@@ -31,7 +31,8 @@ export const onCreate = functions.firestore
 			await stripe.products.create(nullFilter(data))
 		} catch (error) {
 			console.error(error)
-			await firestore.doc(product.path).set({ isAvailable: false }, { merge: true })
+			product.isAvailable = false
+			await product.update()
 		}
 	})
 
@@ -61,6 +62,7 @@ export const onUpdate = functions.firestore
 			await stripe.products.update(product.id, nullFilter(data))
 		} catch (error) {
 			console.error(error)
-			await firestore.doc(product.path).set({ isAvailable: false }, { merge: true })
+			product.isAvailable = false
+			await product.update()
 		}
 	})

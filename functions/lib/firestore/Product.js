@@ -38,6 +38,7 @@ exports.onCreate = functions.firestore
 exports.onUpdate = functions.firestore
     .document('/commerce/{version}/users/{userID}/products/{productID}')
     .onUpdate(async (snapshot, context) => {
+    console.info(context);
     const product = Product_1.Product.fromSnapshot(snapshot.after);
     if (!product.isAvailable) {
         return;

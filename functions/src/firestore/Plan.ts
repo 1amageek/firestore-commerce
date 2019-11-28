@@ -30,6 +30,7 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.plans.create(nullFilter(data))
 		} catch (error) {
+			console.error(error)
 			plan.isAvailable = false
 			await plan.update()
 		}
@@ -58,6 +59,7 @@ export const onUpdate = functions.firestore
 		try {
 			await stripe.plans.update(plan.id, nullFilter(data))
 		} catch (error) {
+			console.error(error)
 			plan.isAvailable = false
 			await plan.update()
 		}

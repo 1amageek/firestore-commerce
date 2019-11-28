@@ -29,6 +29,7 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.skus.create(nullFilter(data))
 		} catch (error) {
+			console.error(error)
 			sku.isAvailable = false
 			await sku.update()
 		}
@@ -60,6 +61,7 @@ export const onUpdate = functions.firestore
 		try {
 			await stripe.skus.update(sku.id, nullFilter(data))
 		} catch (error) {
+			console.error(error)
 			sku.isAvailable = false
 			await sku.update()
 		}
