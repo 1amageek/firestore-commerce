@@ -4,7 +4,6 @@ const functions = require("firebase-functions");
 const Stripe = require("stripe");
 const helper_1 = require("./helper");
 const config_1 = require("../config");
-const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 const Product_1 = require("../models/Product");
 exports.onCreate = functions.firestore
     .document('/commerce/{version}/users/{userID}/products/{productID}')
@@ -32,7 +31,8 @@ exports.onCreate = functions.firestore
     }
     catch (error) {
         console.error(error);
-        await ballcap_admin_1.firestore.doc(product.path).set({ isAvailable: false }, { merge: true });
+        product.isAvailable = false;
+        await product.update();
     }
 });
 exports.onUpdate = functions.firestore
@@ -62,7 +62,8 @@ exports.onUpdate = functions.firestore
     }
     catch (error) {
         console.error(error);
-        await ballcap_admin_1.firestore.doc(product.path).set({ isAvailable: false }, { merge: true });
+        product.isAvailable = false;
+        await product.update();
     }
 });
 //# sourceMappingURL=Product.js.map

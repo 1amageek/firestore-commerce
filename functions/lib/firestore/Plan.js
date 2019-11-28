@@ -32,6 +32,7 @@ exports.onCreate = functions.firestore
         await stripe.plans.create(helper_1.nullFilter(data));
     }
     catch (error) {
+        console.error(error);
         plan.isAvailable = false;
         await plan.update();
     }
@@ -60,6 +61,7 @@ exports.onUpdate = functions.firestore
         await stripe.plans.update(plan.id, helper_1.nullFilter(data));
     }
     catch (error) {
+        console.error(error);
         plan.isAvailable = false;
         await plan.update();
     }

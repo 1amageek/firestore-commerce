@@ -2,7 +2,6 @@ import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
 import { nullFilter } from './helper'
 import config from '../config'
-import { firestore } from '@1amageek/ballcap-admin'
 import { Product } from '../models/Product'
 
 
