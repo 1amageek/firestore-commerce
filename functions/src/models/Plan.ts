@@ -12,6 +12,7 @@ export class Plan extends Doc implements PlanProtocol<Subscription, Subscription
 	@Field publishedBy!: string
 	@Field createdBy!: string
 	@Field productReference?: DocumentReference
+	@Field name?: string
 	@Field currency: Currency = Currency.JPY
 	@Field amount: number = 0
 	@Field interval: Interval = Interval.month

@@ -17,9 +17,11 @@ export const onCreate = functions.firestore
 		const data: Stripe.plans.IPlanCreationOptions = {
 			id: plan.id,
 			product: plan.parent.parent!.id,
+			nickname: plan.name,
 			interval: plan.interval,
 			interval_count: plan.intervalCount,
 			currency: plan.currency,
+			trial_period_days: plan.trialPeriodDays?.toDate().valueOf(),
 			amount: plan.amount,
 			active: plan.isAvailable,
 			metadata: {
