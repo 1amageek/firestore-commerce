@@ -40,6 +40,10 @@ __decorate([
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
+], Plan.prototype, "name", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
 ], Plan.prototype, "currency", void 0);
 __decorate([
     ballcap_admin_1.Field,

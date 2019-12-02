@@ -8,6 +8,7 @@ const Plan_1 = require("../models/Plan");
 exports.onCreate = functions.firestore
     .document('/commerce/{version}/users/{userID}/products/{productID}/plans/{planID}')
     .onCreate(async (snapshot, context) => {
+    var _a;
     console.info(context);
     const STRIPE_API_KEY = config_1.default.stripe.api_key || functions.config().stripe.api_key;
     if (!STRIPE_API_KEY) {
@@ -18,9 +19,11 @@ exports.onCreate = functions.firestore
     const data = {
         id: plan.id,
         product: plan.parent.parent.id,
+        nickname: plan.name,
         interval: plan.interval,
         interval_count: plan.intervalCount,
         currency: plan.currency,
+        trial_period_days: (_a = plan.trialPeriodDays) === null || _a === void 0 ? void 0 : _a.toDate().valueOf(),
         amount: plan.amount,
         active: plan.isAvailable,
         metadata: {

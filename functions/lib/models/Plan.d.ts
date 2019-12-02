@@ -7,6 +7,7 @@ export declare class Plan extends Doc implements PlanProtocol<Subscription, Subs
     publishedBy: string;
     createdBy: string;
     productReference?: DocumentReference;
+    name?: string;
     currency: Currency;
     amount: number;
     interval: Interval;
