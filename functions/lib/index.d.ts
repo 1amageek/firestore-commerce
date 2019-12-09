@@ -16,16 +16,30 @@ import { TradeTransaction } from './models/TradeTransaction';
 export { Account, User, Product, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction };
 export declare const firestore: {
     product: {
+        plan: {
+            onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
+            onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+        };
+        sku: {
+            onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
+            onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+        };
         onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
         onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
     };
-    sku: {
-        onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-        onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
-    };
-    plan: {
-        onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-        onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+    user: {
+        product: {
+            plan: {
+                onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
+                onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+            };
+            sku: {
+                onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
+                onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+            };
+            onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
+            onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+        };
     };
 };
 export declare const accountCreate: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;

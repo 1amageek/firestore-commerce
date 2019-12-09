@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const Stripe = require("stripe");
-const helper_1 = require("./helper");
-const config_1 = require("../config");
-const Plan_1 = require("../models/Plan");
+const helper_1 = require("../helper");
+const config_1 = require("../../config");
+const Plan_1 = require("../../models/Plan");
 exports.onCreate = functions.firestore
-    .document('/commerce/{version}/users/{userID}/products/{productID}/plans/{planID}')
+    .document('/commerce/{version}/products/{productID}/plans/{planID}')
     .onCreate(async (snapshot, context) => {
     var _a;
     console.info(context);
@@ -41,7 +41,7 @@ exports.onCreate = functions.firestore
     }
 });
 exports.onUpdate = functions.firestore
-    .document('/commerce/{version}/users/{userID}/products/{productID}/plans/{planID}')
+    .document('/commerce/{version}/products/{productID}/plans/{planID}')
     .onUpdate(async (snapshot, context) => {
     console.info(context);
     const plan = Plan_1.Plan.fromSnapshot(snapshot.after);

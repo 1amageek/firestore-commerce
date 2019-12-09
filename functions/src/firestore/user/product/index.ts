@@ -1,8 +1,14 @@
 import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
-import { nullFilter } from './helper'
-import config from '../config'
-import { Product } from '../models/Product'
+import { nullFilter } from '../../helper'
+import config from '../../../config'
+import { Product } from '../../../models/Product'
+
+import * as Plan from './Plan'
+import * as SKU from './SKU'
+
+export const plan = { ...Plan }
+export const sku = { ...SKU }
 
 export const onCreate = functions.firestore
 	.document('/commerce/{version}/users/{userID}/products/{productID}')
@@ -64,3 +70,5 @@ export const onUpdate = functions.firestore
 			await product.update()
 		}
 	})
+
+

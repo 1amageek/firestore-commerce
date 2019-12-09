@@ -9,10 +9,4 @@ exports.nullFilter = (data) => {
     });
     return mod;
 };
-exports.idEncoder = (path) => {
-    return path.replace('/', '--');
-};
-exports.idDecoder = (path) => {
-    return path.replace('--', '/');
-};
 //# sourceMappingURL=helper.js.map

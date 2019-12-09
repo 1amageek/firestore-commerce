@@ -5,11 +5,3 @@ export const nullFilter = <T>(data: T) => {
 	})
 	return mod
 }
-
-export const idEncoder = (path: string) => {
-	return path.replace('/', '--')
-}
-
-export const idDecoder = (path: string) => {
-	return path.replace('--', '/')
-}

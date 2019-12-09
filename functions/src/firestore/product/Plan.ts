@@ -1,11 +1,11 @@
 import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
-import { nullFilter } from './helper'
-import config from '../config'
-import { Plan } from '../models/Plan'
+import { nullFilter } from '../helper'
+import config from '../../config'
+import { Plan } from '../../models/Plan'
 
 export const onCreate = functions.firestore
-	.document('/commerce/{version}/users/{userID}/products/{productID}/plans/{planID}')
+	.document('/commerce/{version}/products/{productID}/plans/{planID}')
 	.onCreate(async (snapshot, context) => {
 		console.info(context)
 		const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
@@ -39,7 +39,7 @@ export const onCreate = functions.firestore
 	})
 
 export const onUpdate = functions.firestore
-	.document('/commerce/{version}/users/{userID}/products/{productID}/plans/{planID}')
+	.document('/commerce/{version}/products/{productID}/plans/{planID}')
 	.onUpdate(async (snapshot, context) => {
 		console.info(context)
 		const plan: Plan = Plan.fromSnapshot(snapshot.after)
