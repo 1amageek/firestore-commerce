@@ -16,6 +16,7 @@ import { BalanceTransaction } from './models/BalanceTransaction';
 import { TradeTransaction } from './models/TradeTransaction';
 export { Account, User, Product, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction };
 export declare const auth: {
+    setCustomer: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;
     onCreate: functions.CloudFunction<admin.auth.UserRecord>;
 };
 export declare const firestore: {
