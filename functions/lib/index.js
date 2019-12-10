@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const Stripe = require("stripe");
 const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 const tradestore_1 = require("@1amageek/tradestore");
 const config_1 = require("./config");
@@ -36,39 +35,12 @@ const BalanceTransaction_1 = require("./models/BalanceTransaction");
 exports.BalanceTransaction = BalanceTransaction_1.BalanceTransaction;
 const TradeTransaction_1 = require("./models/TradeTransaction");
 exports.TradeTransaction = TradeTransaction_1.TradeTransaction;
+const authTrigger = require("./auth");
 const FirestoreTrigger = require("./firestore");
+// Authentication triggerd functions.
+exports.auth = { ...authTrigger };
 // Cloud Firestore triggered functions.
 exports.firestore = { ...FirestoreTrigger };
-exports.accountCreate = functions.https.onCall(async (data, context) => {
-    if (!context.auth) {
-        throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
-    }
-    const STRIPE_API_KEY = config_1.default.stripe.api_key || functions.config().stripe.api_key;
-    if (!STRIPE_API_KEY) {
-        throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
-    }
-    const uid = context.auth.uid;
-    const stripe = new Stripe(STRIPE_API_KEY);
-    const cuntory = data.country || 'JP';
-    try {
-        const customer = await stripe.customers.create({ description: uid });
-        const account = new Account_1.Account(uid);
-        account.country = cuntory;
-        account.stripeID = customer.id;
-        const user = new User_1.User(uid);
-        user.isAvailable = true;
-        user.country = cuntory;
-        const batch = new ballcap_admin_1.Batch();
-        batch.save(account);
-        batch.save(user);
-        await batch.commit();
-        return user.data();
-    }
-    catch (error) {
-        console.error(error);
-        throw new functions.https.HttpsError('internal', error.stack);
-    }
-});
 exports.checkout = functions.https.onCall(async (data, context) => {
     if (!context.auth) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');

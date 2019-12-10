@@ -1,7 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as Stripe from 'stripe'
-import { initialize, Batch } from '@1amageek/ballcap-admin'
+import { initialize } from '@1amageek/ballcap-admin'
 import { Manager, PaymentOptions, OrderPaymentStatus, TradestoreError, SubscriptionController, SubscriptionOptions } from '@1amageek/tradestore'
 import config from './config'
 
@@ -26,43 +26,18 @@ import { Payout } from './models/Payout'
 import { BalanceTransaction } from './models/BalanceTransaction'
 import { TradeTransaction } from './models/TradeTransaction'
 
+import * as authTrigger from './auth'
 import * as FirestoreTrigger from './firestore'
+
 
 // Commerce documents.
 export { Account, User, Product, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction }
 
+// Authentication triggerd functions.
+export const auth = { ...authTrigger }
+
 // Cloud Firestore triggered functions.
 export const firestore = { ...FirestoreTrigger }
-
-export const accountCreate = functions.https.onCall(async (data, context) => {
-	if (!context.auth) {
-		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
-	}
-	const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
-	if (!STRIPE_API_KEY) {
-		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
-	}
-	const uid: string = context.auth.uid
-	const stripe = new Stripe(STRIPE_API_KEY)
-	const cuntory: string = data.country || 'JP'
-	try {
-		const customer = await stripe.customers.create({ description: uid })
-		const account: Account = new Account(uid)
-		account.country = cuntory
-		account.stripeID = customer.id
-		const user: User = new User(uid)
-		user.isAvailable = true
-		user.country = cuntory
-		const batch: Batch = new Batch()
-		batch.save(account)
-		batch.save(user)
-		await batch.commit()
-		return user.data()
-	} catch (error) {
-		console.error(error)
-		throw new functions.https.HttpsError('internal', error.stack)
-	}
-})
 
 export const checkout = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {

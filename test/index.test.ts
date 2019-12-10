@@ -1,8 +1,8 @@
 process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080'
-import * as admin from '@firebase/testing'
+import * as ftest from '@firebase/testing'
 import * as functions from "firebase-functions-test"
 
-const firebase = admin.initializeTestApp({
+const firebase = ftest.initializeTestApp({
 	projectId: "test-project",
 	auth: { uid: "test-user" }
 })
