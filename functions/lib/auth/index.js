@@ -49,4 +49,38 @@ exports.onCreate = functions.auth.user().onCreate(async (user) => {
         console.error(error);
     }
 });
+exports.setPaymentMethod = functions.https.onCall(async (data, context) => {
+    var _a;
+    if (!context.auth) {
+        throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
+    }
+    const STRIPE_API_KEY = config_1.default.stripe.api_key || functions.config().stripe.api_key;
+    if (!STRIPE_API_KEY) {
+        throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
+    }
+    const paymentMethod = data['paymentMethod'];
+    if (!paymentMethod) {
+        throw new functions.https.HttpsError('invalid-argument', 'The functions requires `peymentMethod`');
+    }
+    const stripe = new Stripe(STRIPE_API_KEY);
+    const uid = context.auth.uid;
+    const userRecord = await admin.auth().getUser(uid);
+    const customClaims = userRecord.customClaims;
+    if (!customClaims) {
+        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
+    }
+    const customerID = (_a = customClaims.stripe) === null || _a === void 0 ? void 0 : _a.customerID;
+    if (!customerID) {
+        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
+    }
+    try {
+        return await stripe.paymentMethods.attach(paymentMethod, {
+            customer: customerID
+        });
+    }
+    catch (error) {
+        console.error(error);
+    }
+    return;
+});
 //# sourceMappingURL=index.js.map
