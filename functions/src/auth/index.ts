@@ -27,7 +27,6 @@ export const setCustomer = functions.https.onCall(async (data, context) => {
 	}
 })
 
-
 export const onCreate = functions.auth.user().onCreate(async (user) => {
 	const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
 	if (!STRIPE_API_KEY) {
@@ -47,4 +46,37 @@ export const onCreate = functions.auth.user().onCreate(async (user) => {
 	} catch (error) {
 		console.error(error)
 	}
+})
+
+export const setPaymentMethod = functions.https.onCall(async (data, context) => {
+	if (!context.auth) {
+		throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.')
+	}
+	const STRIPE_API_KEY = config.stripe.api_key || functions.config().stripe.api_key
+	if (!STRIPE_API_KEY) {
+		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
+	}
+	const paymentMethod = data['paymentMethod']
+	if (!paymentMethod) {
+		throw new functions.https.HttpsError('invalid-argument', 'The functions requires `peymentMethod`')
+	}
+	const stripe = new Stripe(STRIPE_API_KEY)
+	const uid: string = context.auth.uid
+	const userRecord = await admin.auth().getUser(uid)
+	const customClaims = userRecord.customClaims
+	if (!customClaims) {
+		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
+	}
+	const customerID = (customClaims as any).stripe?.customerID
+	if (!customerID) {
+		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
+	}
+	try {
+		return await stripe.paymentMethods.attach(paymentMethod, {
+			customer: customerID
+		})
+	} catch (error) {
+		console.error(error)
+	}
+	return
 })
