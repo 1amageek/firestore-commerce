@@ -48,14 +48,18 @@ export const checkout = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
+	const userRecord = await admin.auth().getUser(uid)
+	const customClaims = userRecord.customClaims
+	if (!customClaims) {
+		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
+	}
+	const customer = (customClaims as any).stripe?.customerID
+	if (!customer) {
+		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
+	}
 	const orderReferencePath = data['orderReference']
 	const source: string = data['source']
 	const orderReference: admin.firestore.DocumentReference = admin.firestore().doc(orderReferencePath)
-	const account: Account = await new Account(uid).fetch()
-	const customer: string | undefined = account.stripeID
-	if (!customer) {
-		throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.')
-	}
 	try {
 		const manager: Manager<Stock, SKU, OrderItem, Order, TradeTransaction, BalanceTransaction, Payout, User, Account> = new Manager(Stock.self(), SKU.self(), Order.self(), TradeTransaction.self(), BalanceTransaction.self(), User.self(), Account.self())
 		manager.delegate = new StripeController(STRIPE_API_KEY)
@@ -139,12 +143,16 @@ export const subscribe = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const planReferencePaths: string[] = data['planReferences']
-	const account: Account = await new Account(uid).fetch()
-	const customer: string | undefined = account.stripeID
-	if (!customer) {
-		throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.')
+	const userRecord = await admin.auth().getUser(uid)
+	const customClaims = userRecord.customClaims
+	if (!customClaims) {
+		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
 	}
+	const customer = (customClaims as any).stripe?.customerID
+	if (!customer) {
+		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
+	}
+	const planReferencePaths: string[] = data['planReferences']
 	const promise: Promise<Plan>[] = planReferencePaths.map(path => {
 		return new Plan(admin.firestore().doc(path)).fetch()
 	})

@@ -9,7 +9,6 @@ export class Account extends Doc implements AccountProtocol<BalanceTransaction, 
 		return firestore.collection("commerce/1/accounts")
 	}
 
-	@Field stripeID?: string
 	@Field country: string = ""
 	@Field isRejected: boolean = false
 	@Field isSigned: boolean = false
