@@ -4,7 +4,6 @@ import { BalanceTransaction } from "./BalanceTransaction";
 import { Payout } from './Payout';
 export declare class Account extends Doc implements AccountProtocol<BalanceTransaction, Payout> {
     static collectionReference(): CollectionReference;
-    stripeID?: string;
     country: string;
     isRejected: boolean;
     isSigned: boolean;

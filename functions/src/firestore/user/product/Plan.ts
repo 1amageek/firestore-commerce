@@ -1,6 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
-import { nullFilter } from '../../helper'
+import { nullFilter } from '../../../helper'
 import config from '../../../config'
 import { Plan } from '../../../models/Plan'
 

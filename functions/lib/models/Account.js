@@ -32,10 +32,6 @@ class Account extends ballcap_admin_1.Doc {
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
-], Account.prototype, "stripeID", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", String)
 ], Account.prototype, "country", void 0);
 __decorate([
     ballcap_admin_1.Field,

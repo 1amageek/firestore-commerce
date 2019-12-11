@@ -42,6 +42,7 @@ exports.auth = { ...authTrigger };
 // Cloud Firestore triggered functions.
 exports.firestore = { ...FirestoreTrigger };
 exports.checkout = functions.https.onCall(async (data, context) => {
+    var _a;
     if (!context.auth) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
@@ -50,14 +51,18 @@ exports.checkout = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
     }
     const uid = context.auth.uid;
+    const userRecord = await admin.auth().getUser(uid);
+    const customClaims = userRecord.customClaims;
+    if (!customClaims) {
+        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
+    }
+    const customer = (_a = customClaims.stripe) === null || _a === void 0 ? void 0 : _a.customerID;
+    if (!customer) {
+        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
+    }
     const orderReferencePath = data['orderReference'];
     const source = data['source'];
     const orderReference = admin.firestore().doc(orderReferencePath);
-    const account = await new Account_1.Account(uid).fetch();
-    const customer = account.stripeID;
-    if (!customer) {
-        throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.');
-    }
     try {
         const manager = new tradestore_1.Manager(Stock_1.Stock.self(), SKU_1.SKU.self(), Order_1.Order.self(), TradeTransaction_1.TradeTransaction.self(), BalanceTransaction_1.BalanceTransaction.self(), User_1.User.self(), Account_1.Account.self());
         manager.delegate = new StripeController_1.StripeController(STRIPE_API_KEY);
@@ -128,6 +133,7 @@ exports.checkout = functions.https.onCall(async (data, context) => {
     }
 });
 exports.subscribe = functions.https.onCall(async (data, context) => {
+    var _a;
     if (!context.auth) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
@@ -136,12 +142,16 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
     }
     const uid = context.auth.uid;
-    const planReferencePaths = data['planReferences'];
-    const account = await new Account_1.Account(uid).fetch();
-    const customer = account.stripeID;
-    if (!customer) {
-        throw new functions.https.HttpsError('invalid-argument', 'The functions requires customer.');
+    const userRecord = await admin.auth().getUser(uid);
+    const customClaims = userRecord.customClaims;
+    if (!customClaims) {
+        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
     }
+    const customer = (_a = customClaims.stripe) === null || _a === void 0 ? void 0 : _a.customerID;
+    if (!customer) {
+        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
+    }
+    const planReferencePaths = data['planReferences'];
     const promise = planReferencePaths.map(path => {
         return new Plan_1.Plan(admin.firestore().doc(path)).fetch();
     });
