@@ -6,6 +6,9 @@ exports.nullFilter = (data) => {
         if (val == null) {
             delete mod[key];
         }
+        if (val instanceof Object) {
+            mod[key] = exports.nullFilter(val);
+        }
     });
     return mod;
 };

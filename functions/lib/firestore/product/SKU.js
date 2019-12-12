@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const Stripe = require("stripe");
-const helper_1 = require("../helper");
+const helper_1 = require("../../helper");
 const config_1 = require("../../config");
 const SKU_1 = require("../../models/SKU");
 exports.onCreate = functions.firestore
