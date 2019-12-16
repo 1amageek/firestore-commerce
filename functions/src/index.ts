@@ -19,6 +19,7 @@ import { SKU } from './models/SKU'
 import { Plan } from './models/Plan'
 import { Order } from './models/Order'
 import { OrderItem } from './models/OrderItem'
+import { Item } from './models/Item'
 import { Subscription } from './models/Subscription'
 import { SubscriptionItem } from './models/SubscriptionItem'
 import { Stock } from './models/Stock'
@@ -31,7 +32,7 @@ import * as FirestoreTrigger from './firestore'
 
 
 // Commerce documents.
-export { Account, User, Product, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction }
+export { Account, User, Product, SKU, Plan, Order, OrderItem, Item, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction }
 
 // Authentication triggerd functions.
 export const auth = { ...authTrigger }
