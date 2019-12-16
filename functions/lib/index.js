@@ -158,7 +158,10 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
     const plans = await Promise.all(promise);
     const subscriptionOptions = {
         vendorType: "stripe",
-        customer: customer
+        customer: customer,
+        metadata: {
+            uid: uid
+        }
     };
     const controller = new tradestore_1.SubscriptionController(Subscription_1.Subscription.self(), SubscriptionItem_1.SubscriptionItem.model());
     controller.delegate = new StripeController_1.StripeController(STRIPE_API_KEY);
