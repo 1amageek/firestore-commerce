@@ -9,12 +9,13 @@ import { SKU } from './models/SKU';
 import { Plan } from './models/Plan';
 import { Order } from './models/Order';
 import { OrderItem } from './models/OrderItem';
+import { Item } from './models/Item';
 import { Subscription } from './models/Subscription';
 import { SubscriptionItem } from './models/SubscriptionItem';
 import { Stock } from './models/Stock';
 import { BalanceTransaction } from './models/BalanceTransaction';
 import { TradeTransaction } from './models/TradeTransaction';
-export { Account, User, Product, SKU, Plan, Order, OrderItem, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction };
+export { Account, User, Product, SKU, Plan, Order, OrderItem, Item, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction };
 export declare const auth: {
     setCustomer: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;
     onCreate: functions.CloudFunction<admin.auth.UserRecord>;

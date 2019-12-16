@@ -7,13 +7,15 @@ export class Item extends Doc implements ItemProtocol {
 		return firestore.collection("commerce/1/items")
 	}
 
-	@Field isCancelled: boolean = false
-	@Field isPrivate: boolean = false
-	@Field passTypeIdentifier!: string
-	@Field selledBy!: string
 	@Field purchasedBy!: string
-	@Field orderReference!: DocumentReference
+	@Field selledBy: string = ''
+	@Field orderReference?: DocumentReference
+	@Field subscriptionReference?: DocumentReference
 	@Field productReference?: DocumentReference
-	@Field skuReference!: DocumentReference
+	@Field skuReference?: DocumentReference
+	@Field planReference?: DocumentReference
+	@Field isPrivate: boolean = false
+	@Field isCancelled: boolean = false
 	@Field stockReference?: DocumentReference
+	@Field metadata?: { [key: string]: any }
 }
