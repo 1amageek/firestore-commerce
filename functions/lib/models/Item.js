@@ -13,8 +13,9 @@ const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 class Item extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
-        this.isCancelled = false;
+        this.selledBy = '';
         this.isPrivate = false;
+        this.isCancelled = false;
     }
     static collectionReference() {
         return ballcap_admin_1.firestore.collection("commerce/1/items");
@@ -22,28 +23,20 @@ class Item extends ballcap_admin_1.Doc {
 }
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", Boolean)
-], Item.prototype, "isCancelled", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", Boolean)
-], Item.prototype, "isPrivate", void 0);
-__decorate([
-    ballcap_admin_1.Field,
     __metadata("design:type", String)
-], Item.prototype, "passTypeIdentifier", void 0);
+], Item.prototype, "purchasedBy", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
 ], Item.prototype, "selledBy", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", String)
-], Item.prototype, "purchasedBy", void 0);
+    __metadata("design:type", ballcap_admin_1.DocumentReference)
+], Item.prototype, "orderReference", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", ballcap_admin_1.DocumentReference)
-], Item.prototype, "orderReference", void 0);
+], Item.prototype, "subscriptionReference", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", ballcap_admin_1.DocumentReference)
@@ -55,6 +48,22 @@ __decorate([
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", ballcap_admin_1.DocumentReference)
+], Item.prototype, "planReference", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Boolean)
+], Item.prototype, "isPrivate", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Boolean)
+], Item.prototype, "isCancelled", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", ballcap_admin_1.DocumentReference)
 ], Item.prototype, "stockReference", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Item.prototype, "metadata", void 0);
 exports.Item = Item;
 //# sourceMappingURL=Item.js.map

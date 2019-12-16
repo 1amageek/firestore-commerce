@@ -2,13 +2,17 @@ import { Doc, DocumentReference, CollectionReference } from '@1amageek/ballcap-a
 import { ItemProtocol } from '@1amageek/tradestore';
 export declare class Item extends Doc implements ItemProtocol {
     static collectionReference(): CollectionReference;
-    isCancelled: boolean;
-    isPrivate: boolean;
-    passTypeIdentifier: string;
-    selledBy: string;
     purchasedBy: string;
-    orderReference: DocumentReference;
+    selledBy: string;
+    orderReference?: DocumentReference;
+    subscriptionReference?: DocumentReference;
     productReference?: DocumentReference;
-    skuReference: DocumentReference;
+    skuReference?: DocumentReference;
+    planReference?: DocumentReference;
+    isPrivate: boolean;
+    isCancelled: boolean;
     stockReference?: DocumentReference;
+    metadata?: {
+        [key: string]: any;
+    };
 }
