@@ -13,6 +13,6 @@ export declare class SKU extends Doc implements SKUProtocol<Stock> {
     caption: string;
     amount: number;
     inventory: Inventory;
-    isPrivated: boolean;
+    isPrivate: boolean;
     stocks: Collection<Stock>;
 }

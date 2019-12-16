@@ -3,7 +3,7 @@ import { ItemProtocol } from '@1amageek/tradestore';
 export declare class Item extends Doc implements ItemProtocol {
     static collectionReference(): CollectionReference;
     isCancelled: boolean;
-    isPrivated: boolean;
+    isPrivate: boolean;
     passTypeIdentifier: string;
     selledBy: string;
     purchasedBy: string;

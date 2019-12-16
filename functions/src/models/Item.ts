@@ -8,7 +8,7 @@ export class Item extends Doc implements ItemProtocol {
 	}
 
 	@Field isCancelled: boolean = false
-	@Field isPrivated: boolean = false
+	@Field isPrivate: boolean = false
 	@Field passTypeIdentifier!: string
 	@Field selledBy!: string
 	@Field purchasedBy!: string

@@ -19,7 +19,7 @@ class SKU extends ballcap_admin_1.Doc {
         this.currency = tradestore_1.Currency.JPY;
         this.amount = 0;
         this.inventory = { type: tradestore_1.StockType.finite, quantity: 1 };
-        this.isPrivated = false;
+        this.isPrivate = false;
         this.stocks = new ballcap_admin_1.Collection();
     }
     static collectionReference() {
@@ -69,7 +69,7 @@ __decorate([
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Boolean)
-], SKU.prototype, "isPrivated", void 0);
+], SKU.prototype, "isPrivate", void 0);
 __decorate([
     ballcap_admin_1.SubCollection,
     __metadata("design:type", ballcap_admin_1.Collection)

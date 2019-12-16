@@ -18,6 +18,6 @@ export class SKU extends Doc implements SKUProtocol<Stock> {
 	@Field caption!: string
 	@Field amount: number = 0
 	@Field inventory: Inventory = { type: StockType.finite, quantity: 1 }
-	@Field isPrivated: boolean = false
+	@Field isPrivate: boolean = false
 	@SubCollection stocks: Collection<Stock> = new Collection()
 }

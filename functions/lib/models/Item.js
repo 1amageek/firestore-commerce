@@ -14,7 +14,7 @@ class Item extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
         this.isCancelled = false;
-        this.isPrivated = false;
+        this.isPrivate = false;
     }
     static collectionReference() {
         return ballcap_admin_1.firestore.collection("commerce/1/items");
@@ -27,7 +27,7 @@ __decorate([
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Boolean)
-], Item.prototype, "isPrivated", void 0);
+], Item.prototype, "isPrivate", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
