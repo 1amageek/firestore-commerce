@@ -159,7 +159,10 @@ export const subscribe = functions.https.onCall(async (data, context) => {
 	const plans: Plan[] = await Promise.all(promise)
 	const subscriptionOptions: SubscriptionOptions = {
 		vendorType: "stripe",
-		customer: customer
+		customer: customer,
+		metadata: {
+			uid: uid
+		}
 	}
 	const controller: SubscriptionController<Plan, SubscriptionItem, Subscription, User> = new SubscriptionController(Subscription.self(), SubscriptionItem.model())
 	controller.delegate = new StripeController(STRIPE_API_KEY)

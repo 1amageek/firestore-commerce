@@ -118,7 +118,7 @@ exports.setDefaultPaymentMethod = functions.https.onCall(async (data, context) =
         throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
     }
     try {
-        return await stripe.customers.update(uid, {
+        return await stripe.customers.update(customerID, {
             invoice_settings: {
                 default_payment_method: paymentMethod
             }
