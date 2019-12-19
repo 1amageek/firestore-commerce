@@ -69,9 +69,14 @@ exports.checkout = functions.https.onCall(async (data, context) => {
         const manager = new tradestore_1.Manager(Stock_1.Stock.self(), SKU_1.SKU.self(), Order_1.Order.self(), TradeTransaction_1.TradeTransaction.self(), BalanceTransaction_1.BalanceTransaction.self(), User_1.User.self(), Account_1.Account.self());
         manager.delegate = new StripeController_1.StripeController(STRIPE_API_KEY);
         manager.tradeDelegate = new TradeController_1.TradeController();
+        const metadata = data['metadata'] || {};
         const paymentOptions = {
             vendorType: 'stripe',
-            refundFeeRate: 0
+            refundFeeRate: 0,
+            metadata: {
+                ...metadata,
+                uid: uid
+            }
         };
         if (source) {
             paymentOptions['source'] = source;
@@ -158,10 +163,12 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
         return new Plan_1.Plan(admin.firestore().doc(path)).fetch();
     });
     const plans = await Promise.all(promise);
+    const metadata = data['metadata'] || {};
     const subscriptionOptions = {
         vendorType: "stripe",
         customer: customer,
         metadata: {
+            ...metadata,
             uid: uid
         }
     };

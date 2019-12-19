@@ -29,6 +29,7 @@ import { TradeTransaction } from './models/TradeTransaction'
 
 import * as authTrigger from './auth'
 import * as FirestoreTrigger from './firestore'
+import * as StripeAPI from './stripe'
 
 
 // Commerce documents.
@@ -39,6 +40,9 @@ export const auth = { ...authTrigger }
 
 // Cloud Firestore triggered functions.
 export const firestore = { ...FirestoreTrigger }
+
+// Stripe API
+export const stripe = { ...StripeAPI }
 
 export const checkout = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
