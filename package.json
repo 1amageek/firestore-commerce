@@ -1,74 +1,74 @@
 {
-  "name": "@1amageek/firestore-commerce",
-  "version": "0.4.9",
-  "publishConfig": {
-    "access": "public"
-  },
-  "description": "Commerce for Cloud Firestore",
-  "contributors": [
-    {
-      "name": "Norikazu Muramoto",
-      "email": "tmy0x3@icloud.com"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/1amageek/firestore-commerce.git"
-  },
-  "keywords": [
-    "firestore",
-    "firebase",
-    "tradestore",
-    "model",
-    "typescript"
-  ],
-  "author": "1amageek",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/1amageek/firestore-commerce/issues"
-  },
-  "scripts": {
-    "prepare": "npm run build",
-    "lint": "tslint --project tsconfig.json",
-    "clean": "rimraf functions/lib",
-    "build": "npm run clean && npm run compile",
-    "compile": "tsc -d",
-    "serve": "npm run build && firebase serve --only functions",
-    "shell": "npm run build && firebase functions:shell",
-    "start": "npm run shell",
-    "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log",
-    "emulate": "firebase emulators:start",
-    "test": "firebase emulators:exec jest"
-  },
-  "engines": {
-    "node": "8"
-  },
-  "main": "functions/lib/index.js",
-  "types": "functions/lib/index.d.ts",
-  "dependencies": {},
-  "devDependencies": {
-    "@1amageek/ballcap-admin": "^0.5.6",
-    "@1amageek/tradestore": "^0.4.2",
-    "@firebase/testing": "^0.16.0",
-    "@types/jest": "^24.0.23",
-    "@types/stripe": "^7.13.16",
-    "firebase-admin": "^8.8.0",
-    "firebase-functions": "^3.3.0",
-    "firebase-functions-test": "^0.1.7",
-    "jest": "^24.9.0",
-    "rimraf": "^3.0.0",
-    "stripe": "^7.14.0",
-    "ts-jest": "^24.1.0",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.3"
-  },
-  "peerDependencies": {
+	"name": "@1amageek/firestore-commerce",
+	"version": "0.4.10",
+	"publishConfig": {
+		"access": "public"
+	},
+	"description": "Commerce for Cloud Firestore",
+	"contributors": [
+		{
+			"name": "Norikazu Muramoto",
+			"email": "tmy0x3@icloud.com"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/1amageek/firestore-commerce.git"
+	},
+	"keywords": [
+		"firestore",
+		"firebase",
+		"tradestore",
+		"model",
+		"typescript"
+	],
+	"author": "1amageek",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/1amageek/firestore-commerce/issues"
+	},
+	"scripts": {
+		"prepare": "npm run build",
+		"lint": "tslint --project tsconfig.json",
+		"clean": "rimraf functions/lib",
+		"build": "npm run clean && npm run compile",
+		"compile": "tsc -d",
+		"serve": "npm run build && firebase serve --only functions",
+		"shell": "npm run build && firebase functions:shell",
+		"start": "npm run shell",
+		"deploy": "firebase deploy --only functions",
+		"logs": "firebase functions:log",
+		"emulate": "firebase emulators:start",
+		"test": "firebase emulators:exec jest"
+	},
+	"engines": {
+		"node": "8"
+	},
+	"main": "functions/lib/index.js",
+	"types": "functions/lib/index.d.ts",
+	"dependencies": {},
+	"devDependencies": {
 		"@1amageek/ballcap-admin": "^0.5.6",
 		"@1amageek/tradestore": "^0.4.2",
-    "firebase-admin": "^8.8.0",
-    "firebase-functions": "^3.3.0",
-    "stripe": "^7.14.0"
-  },
-  "private": false
+		"@firebase/testing": "^0.16.0",
+		"@types/jest": "^24.0.23",
+		"@types/stripe": "^7.13.16",
+		"firebase-admin": "^8.8.0",
+		"firebase-functions": "^3.3.0",
+		"firebase-functions-test": "^0.1.7",
+		"jest": "^24.9.0",
+		"rimraf": "^3.0.0",
+		"stripe": "^7.14.0",
+		"ts-jest": "^24.1.0",
+		"tslint": "^5.20.1",
+		"typescript": "^3.7.3"
+	},
+	"peerDependencies": {
+		"@1amageek/ballcap-admin": "^0.5.6",
+		"@1amageek/tradestore": "^0.4.2",
+		"firebase-admin": "^8.8.0",
+		"firebase-functions": "^3.3.0",
+		"stripe": "^7.14.0"
+	},
+	"private": false
 }
