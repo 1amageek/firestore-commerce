@@ -13,7 +13,7 @@ const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 class Account extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
-        this.country = "";
+        this.country = '';
         this.isRejected = false;
         this.isSigned = false;
         this.hasLegalEntity = false;
@@ -26,7 +26,7 @@ class Account extends ballcap_admin_1.Doc {
         this.payoutRequests = new ballcap_admin_1.Collection();
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/accounts");
+        return ballcap_admin_1.firestore.collection('commerce/1/accounts');
     }
 }
 __decorate([

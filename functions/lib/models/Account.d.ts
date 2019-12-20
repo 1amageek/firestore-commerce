@@ -1,6 +1,6 @@
 import { Doc, Collection, CollectionReference } from '@1amageek/ballcap-admin';
 import { AccountProtocol, Balance } from '@1amageek/tradestore';
-import { BalanceTransaction } from "./BalanceTransaction";
+import { BalanceTransaction } from './BalanceTransaction';
 import { Payout } from './Payout';
 export declare class Account extends Doc implements AccountProtocol<BalanceTransaction, Payout> {
     static collectionReference(): CollectionReference;

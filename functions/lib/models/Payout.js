@@ -16,13 +16,13 @@ class Payout extends ballcap_admin_1.Doc {
         super(...arguments);
         this.currency = tradestore_1.Currency.JPY;
         this.amount = 0;
-        this.account = "";
+        this.account = '';
         this.status = tradestore_1.PayoutStatus.none;
         this.transactionResults = [];
         this.isCancelled = false;
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/payouts");
+        return ballcap_admin_1.firestore.collection('commerce/1/payouts');
     }
 }
 __decorate([

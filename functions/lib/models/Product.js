@@ -19,7 +19,7 @@ class Product extends ballcap_admin_1.Doc {
         this.plans = new ballcap_admin_1.Collection();
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/products");
+        return ballcap_admin_1.firestore.collection('commerce/1/products');
     }
 }
 __decorate([

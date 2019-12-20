@@ -22,7 +22,7 @@ class Plan extends ballcap_admin_1.Doc {
         this.subscriptions = new ballcap_admin_1.Collection();
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/plans");
+        return ballcap_admin_1.firestore.collection('commerce/1/plans');
     }
 }
 __decorate([

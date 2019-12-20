@@ -24,7 +24,7 @@ class TradeController {
     }
     async getItems(order, orderItem, transaction) {
         const purchaser = new User_1.User(order.purchasedBy);
-        const query = purchaser.items.collectionReference.where("orderReference", "==", order.documentReference);
+        const query = purchaser.items.collectionReference.where('orderReference', '==', order.documentReference);
         const items = await transaction.get(query);
         return items;
     }

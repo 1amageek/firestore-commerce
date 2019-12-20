@@ -14,7 +14,7 @@ class User extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
         this.isAvailable = false;
-        this.country = "JP";
+        this.country = 'JP';
         this.products = new ballcap_admin_1.Collection();
         this.orders = new ballcap_admin_1.Collection();
         this.receivedOrders = new ballcap_admin_1.Collection();
@@ -24,7 +24,7 @@ class User extends ballcap_admin_1.Doc {
         this.subscribers = new ballcap_admin_1.Collection();
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/users");
+        return ballcap_admin_1.firestore.collection('commerce/1/users');
     }
 }
 __decorate([

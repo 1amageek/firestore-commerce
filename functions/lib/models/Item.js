@@ -18,7 +18,7 @@ class Item extends ballcap_admin_1.Doc {
         this.isCancelled = false;
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/items");
+        return ballcap_admin_1.firestore.collection('commerce/1/items');
     }
 }
 __decorate([

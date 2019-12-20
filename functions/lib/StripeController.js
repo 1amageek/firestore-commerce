@@ -33,7 +33,7 @@ class StripeController {
         }
     }
     async authorizeCancel(currency, amount, order, options) {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
     async charge(currency, amount, order, options) {
         const idempotency_key = order.id;
@@ -63,7 +63,7 @@ class StripeController {
     }
     async subscribe(subscription, options) {
         if (!options.customer) {
-            throw new Error("[StripeController] CustomerID is required for subscription.");
+            throw new Error('[StripeController] CustomerID is required for subscription.');
         }
         const customer = options.customer;
         const data = {
@@ -85,7 +85,7 @@ class StripeController {
     async refund(currency, amount, order, options, reason) {
         const transactionResults = order.transactionResults;
         const transactionResult = transactionResults[transactionResults.length - 1];
-        const stripeCharge = transactionResult["stripe"];
+        const stripeCharge = transactionResult['stripe'];
         const charegeID = stripeCharge.id;
         const idempotency_key = `refund:${order.id}`;
         const data = {};
@@ -105,7 +105,7 @@ class StripeController {
     async partRefund(currency, amount, order, orderItem, options, reason) {
         const transactionResults = order.transactionResults;
         const transactionResult = transactionResults[transactionResults.length - 1];
-        const stripeCharge = transactionResult["stripe"];
+        const stripeCharge = transactionResult['stripe'];
         const charegeID = stripeCharge.id;
         const idempotency_key = `refund:${orderItem}`;
         const data = {};
@@ -143,13 +143,13 @@ class StripeController {
         }
     }
     async transferCancel(currency, amount, order, options, reason) {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
     async payout(currency, amount, accountID, options) {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
     async payoutCancel(currency, amount, accountID, options) {
-        throw new Error("Method not implemented.");
+        throw new Error('Method not implemented.');
     }
 }
 exports.StripeController = StripeController;

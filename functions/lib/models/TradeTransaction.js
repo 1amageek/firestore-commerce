@@ -20,7 +20,7 @@ class TradeTransaction extends ballcap_admin_1.Doc {
         this.purchasedBy = '';
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/tradeTransactions");
+        return ballcap_admin_1.firestore.collection('commerce/1/tradeTransactions');
     }
 }
 __decorate([

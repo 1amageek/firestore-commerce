@@ -1,5 +1,5 @@
 import { Doc, Field, Timestamp, File, DocumentReference, firestore, CollectionReference } from '@1amageek/ballcap-admin'
-import { ShardType, randomShard, DafaultShardCharacters, OrderProtocol, Currency, OrderPaymentStatus, OrderTransferStatus, TransactionResult } from '@1amageek/tradestore'
+import { ShardType, randomShard, DafaultShardCharacters, OrderProtocol, Currency, OrderPaymentStatus, OrderTransferStatus, DeliveryStatus, TransactionResult } from '@1amageek/tradestore'
 import { OrderItem } from './OrderItem'
 
 export class Order extends Doc implements OrderProtocol<OrderItem> {
@@ -21,6 +21,7 @@ export class Order extends Doc implements OrderProtocol<OrderItem> {
 	@Field currency: Currency = Currency.JPY
 	@Field amount: number = 0
 	@Field items: OrderItem[] = []
+	@Field deliveryStatus: DeliveryStatus = DeliveryStatus.none
 	@Field paymentStatus: OrderPaymentStatus = OrderPaymentStatus.none
 	@Field transferStatus: OrderTransferStatus = OrderTransferStatus.none
 	@Field transactionResults: TransactionResult[] = []

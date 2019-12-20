@@ -16,7 +16,7 @@ class Stock extends ballcap_admin_1.Doc {
         this.isAvailable = true;
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/stocks");
+        return ballcap_admin_1.firestore.collection('commerce/1/stocks');
     }
 }
 __decorate([

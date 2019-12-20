@@ -23,7 +23,7 @@ class SKU extends ballcap_admin_1.Doc {
         this.stocks = new ballcap_admin_1.Collection();
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/SKUs");
+        return ballcap_admin_1.firestore.collection('commerce/1/SKUs');
     }
 }
 __decorate([

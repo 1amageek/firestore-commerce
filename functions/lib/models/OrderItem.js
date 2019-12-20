@@ -14,32 +14,16 @@ const tradestore_1 = require("@1amageek/tradestore");
 class OrderItem extends ballcap_admin_1.Model {
     constructor() {
         super(...arguments);
-        this.order = '';
-        this.purchasedBy = '';
         this.selledBy = '';
+        this.createdBy = '';
         this.type = tradestore_1.OrderItemType.sku;
         this.quantity = 0;
         this.currency = tradestore_1.Currency.JPY;
         this.amount = 0;
         this.status = tradestore_1.OrderItemStatus.none;
+        this.name = '';
     }
 }
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", String)
-], OrderItem.prototype, "name", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", ballcap_admin_1.File)
-], OrderItem.prototype, "thumbnailImage", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", String)
-], OrderItem.prototype, "createdBy", void 0);
-__decorate([
-    ballcap_admin_1.Field,
-    __metadata("design:type", String)
-], OrderItem.prototype, "order", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
@@ -51,6 +35,10 @@ __decorate([
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
+], OrderItem.prototype, "createdBy", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
 ], OrderItem.prototype, "type", void 0);
 __decorate([
     ballcap_admin_1.Field,
@@ -58,8 +46,8 @@ __decorate([
 ], OrderItem.prototype, "productReference", void 0);
 __decorate([
     ballcap_admin_1.Field,
-    __metadata("design:type", String)
-], OrderItem.prototype, "sku", void 0);
+    __metadata("design:type", ballcap_admin_1.DocumentReference)
+], OrderItem.prototype, "skuReference", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Number)
@@ -76,5 +64,13 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
 ], OrderItem.prototype, "status", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], OrderItem.prototype, "name", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", ballcap_admin_1.File)
+], OrderItem.prototype, "thumbnailImage", void 0);
 exports.OrderItem = OrderItem;
 //# sourceMappingURL=OrderItem.js.map

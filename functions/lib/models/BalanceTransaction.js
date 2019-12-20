@@ -21,7 +21,7 @@ class BalanceTransaction extends ballcap_admin_1.Doc {
         this.transactionResults = [];
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/balanceTransactions");
+        return ballcap_admin_1.firestore.collection('commerce/1/balanceTransactions');
     }
 }
 __decorate([

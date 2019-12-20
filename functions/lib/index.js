@@ -168,7 +168,7 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
     const plans = await Promise.all(promise);
     const metadata = data['metadata'] || {};
     const subscriptionOptions = {
-        vendorType: "stripe",
+        vendorType: 'stripe',
         customer: customer,
         metadata: {
             ...metadata,

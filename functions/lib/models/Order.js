@@ -26,7 +26,7 @@ class Order extends ballcap_admin_1.Doc {
         this.isCancelled = false;
     }
     static collectionReference() {
-        return ballcap_admin_1.firestore.collection("commerce/1/orders");
+        return ballcap_admin_1.firestore.collection('commerce/1/orders');
     }
 }
 __decorate([
