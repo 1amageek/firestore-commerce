@@ -38,7 +38,7 @@ export class StripeController implements PaymentDelegate {
 	}
 
 	async authorizeCancel<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions) {
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 
 	async charge<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: PaymentOptions) {
@@ -69,7 +69,7 @@ export class StripeController implements PaymentDelegate {
 
 	async subscribe<U extends SubscriptionItemProtocol, T extends SubscriptionProtocol<U>>(subscription: T, options: SubscriptionOptions): Promise<any> {
 		if (!options.customer) {
-			throw new Error("[StripeController] CustomerID is required for subscription.")
+			throw new Error('[StripeController] CustomerID is required for subscription.')
 		}
 		const customer: string = options.customer
 		const data: Stripe.subscriptions.ISubscriptionCreationOptions = {
@@ -93,7 +93,7 @@ export class StripeController implements PaymentDelegate {
 
 		const transactionResults = order.transactionResults
 		const transactionResult = transactionResults[transactionResults.length - 1]
-		const stripeCharge = transactionResult["stripe"] as Stripe.charges.ICharge
+		const stripeCharge = transactionResult['stripe'] as Stripe.charges.ICharge
 		const charegeID = stripeCharge.id
 		const idempotency_key = `refund:${order.id}`
 
@@ -115,7 +115,7 @@ export class StripeController implements PaymentDelegate {
 	async partRefund<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, orderItem: U, options: PaymentOptions, reason?: string | undefined) {
 		const transactionResults = order.transactionResults
 		const transactionResult = transactionResults[transactionResults.length - 1]
-		const stripeCharge = transactionResult["stripe"] as Stripe.charges.ICharge
+		const stripeCharge = transactionResult['stripe'] as Stripe.charges.ICharge
 		const charegeID = stripeCharge.id
 		const idempotency_key = `refund:${orderItem}`
 		const data: Stripe.refunds.IRefundCreationOptions = {}
@@ -153,14 +153,14 @@ export class StripeController implements PaymentDelegate {
 	}
 
 	async transferCancel<U extends OrderItemProtocol, T extends OrderProtocol<U>>(currency: Currency, amount: number, order: T, options: TransferOptions, reason?: string | undefined) {
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 
 	async payout(currency: Currency, amount: number, accountID: string, options: PayoutOptions) {
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 
 	async payoutCancel(currency: Currency, amount: number, accountID: string, options: PayoutOptions) {
-		throw new Error("Method not implemented.");
+		throw new Error('Method not implemented.');
 	}
 }

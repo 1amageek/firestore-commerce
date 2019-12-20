@@ -7,7 +7,7 @@ export type ProductType = 'service' | 'good';
 export class Product extends Doc {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/products")
+		return firestore.collection('commerce/1/products')
 	}
 
 	@Field type: ProductType = 'good'

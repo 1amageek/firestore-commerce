@@ -5,7 +5,7 @@ import { OrderItem } from './OrderItem'
 export class Order extends Doc implements OrderProtocol<OrderItem> {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/orders")
+		return firestore.collection('commerce/1/orders')
 	}
 
 	@Field shard: ShardType = randomShard(DafaultShardCharacters)

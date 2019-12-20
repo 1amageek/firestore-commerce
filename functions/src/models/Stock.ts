@@ -4,7 +4,7 @@ import { StockProtocol } from '@1amageek/tradestore'
 export class Stock extends Doc implements StockProtocol {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/stocks")
+		return firestore.collection('commerce/1/stocks')
 	}
 
 	@Field isAvailable: boolean = true

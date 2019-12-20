@@ -4,7 +4,7 @@ import { ItemProtocol } from '@1amageek/tradestore'
 export class Item extends Doc implements ItemProtocol {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/items")
+		return firestore.collection('commerce/1/items')
 	}
 
 	@Field purchasedBy!: string

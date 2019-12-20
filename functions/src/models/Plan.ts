@@ -6,7 +6,7 @@ import { SubscriptionItem } from './SubscriptionItem'
 export class Plan extends Doc implements PlanProtocol<Subscription, SubscriptionItem> {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/plans")
+		return firestore.collection('commerce/1/plans')
 	}
 
 	@Field publishedBy!: string

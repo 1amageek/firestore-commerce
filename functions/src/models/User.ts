@@ -11,11 +11,11 @@ import { SubscriptionItem } from './SubscriptionItem'
 export class User extends Doc implements Tradable<Order, OrderItem, TradeTransaction, Subscription, SubscriptionItem>, Publishable<User, Subscription, SubscriptionItem> {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/users")
+		return firestore.collection('commerce/1/users')
 	}
 
 	@Field isAvailable: boolean = false
-	@Field country: string = "JP"
+	@Field country: string = 'JP'
 
 	@SubCollection products: Collection<Product> = new Collection()
 	@SubCollection orders: Collection<Order> = new Collection()

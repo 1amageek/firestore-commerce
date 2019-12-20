@@ -1,15 +1,15 @@
 import { Doc, Collection, SubCollection, Field, CollectionReference, firestore } from '@1amageek/ballcap-admin'
 import { AccountProtocol, Balance } from '@1amageek/tradestore'
-import { BalanceTransaction } from "./BalanceTransaction"
+import { BalanceTransaction } from './BalanceTransaction'
 import { Payout } from './Payout'
 
 export class Account extends Doc implements AccountProtocol<BalanceTransaction, Payout> {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/accounts")
+		return firestore.collection('commerce/1/accounts')
 	}
 
-	@Field country: string = ""
+	@Field country: string = ''
 	@Field isRejected: boolean = false
 	@Field isSigned: boolean = false
 	@Field hasLegalEntity: boolean = false

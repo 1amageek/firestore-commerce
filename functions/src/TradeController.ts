@@ -29,7 +29,7 @@ export class TradeController implements TradeDelegate {
 
 	async getItems<T extends OrderItemProtocol, U extends OrderProtocol<T>>(order: U, orderItem: T, transaction: Transaction): Promise<QuerySnapshot> {
 		const purchaser: User = new User(order.purchasedBy)
-		const query = purchaser.items.collectionReference.where("orderReference", "==", order.documentReference)
+		const query = purchaser.items.collectionReference.where('orderReference', '==', order.documentReference)
 		const items = await transaction.get(query)
 		return items
 	}

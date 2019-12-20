@@ -39,10 +39,13 @@ const TradeTransaction_1 = require("./models/TradeTransaction");
 exports.TradeTransaction = TradeTransaction_1.TradeTransaction;
 const authTrigger = require("./auth");
 const FirestoreTrigger = require("./firestore");
+const StripeAPI = require("./stripe");
 // Authentication triggerd functions.
 exports.auth = { ...authTrigger };
 // Cloud Firestore triggered functions.
 exports.firestore = { ...FirestoreTrigger };
+// Stripe API
+exports.stripe = { ...StripeAPI };
 exports.checkout = functions.https.onCall(async (data, context) => {
     var _a;
     if (!context.auth) {

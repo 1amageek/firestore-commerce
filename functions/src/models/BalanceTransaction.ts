@@ -4,7 +4,7 @@ import { ShardType, randomShard, DafaultShardCharacters, BalanceTransactionProto
 export class BalanceTransaction extends Doc implements BalanceTransactionProtocol {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/balanceTransactions")
+		return firestore.collection('commerce/1/balanceTransactions')
 	}
 
 	@Field shard: ShardType = randomShard(DafaultShardCharacters)

@@ -4,7 +4,7 @@ import { ShardType, randomShard, DafaultShardCharacters, TradeTransactionProtoco
 export class TradeTransaction extends Doc implements TradeTransactionProtocol {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/tradeTransactions")
+		return firestore.collection('commerce/1/tradeTransactions')
 	}
 
 	@Field shard: ShardType = randomShard(DafaultShardCharacters)

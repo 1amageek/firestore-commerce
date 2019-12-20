@@ -5,7 +5,7 @@ import { Stock } from './Stock'
 export class SKU extends Doc implements SKUProtocol<Stock> {
 
 	static collectionReference(): CollectionReference {
-		return firestore.collection("commerce/1/SKUs")
+		return firestore.collection('commerce/1/SKUs')
 	}
 
 	@Field isAvailable: boolean = true
