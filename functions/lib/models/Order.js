@@ -20,6 +20,7 @@ class Order extends ballcap_admin_1.Doc {
         this.currency = tradestore_1.Currency.JPY;
         this.amount = 0;
         this.items = [];
+        this.deliveryStatus = tradestore_1.DeliveryStatus.none;
         this.paymentStatus = tradestore_1.OrderPaymentStatus.none;
         this.transferStatus = tradestore_1.OrderTransferStatus.none;
         this.transactionResults = [];
@@ -81,6 +82,10 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Array)
 ], Order.prototype, "items", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", String)
+], Order.prototype, "deliveryStatus", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
