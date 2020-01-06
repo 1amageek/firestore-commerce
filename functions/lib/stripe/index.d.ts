@@ -4,6 +4,8 @@ export declare const customer: {
     update: import("firebase-functions").TriggerAnnotated & ((req: import("express").Request<import("express-serve-static-core").ParamsDictionary>, resp: import("express").Response) => void) & import("firebase-functions").Runnable<any>;
 };
 export declare const paymentMethod: {
+    create: import("firebase-functions").TriggerAnnotated & ((req: import("express").Request<import("express-serve-static-core").ParamsDictionary>, resp: import("express").Response) => void) & import("firebase-functions").Runnable<any>;
+    retrieve: import("firebase-functions").TriggerAnnotated & ((req: import("express").Request<import("express-serve-static-core").ParamsDictionary>, resp: import("express").Response) => void) & import("firebase-functions").Runnable<any>;
     list: import("firebase-functions").TriggerAnnotated & ((req: import("express").Request<import("express-serve-static-core").ParamsDictionary>, resp: import("express").Response) => void) & import("firebase-functions").Runnable<any>;
     attach: import("firebase-functions").TriggerAnnotated & ((req: import("express").Request<import("express-serve-static-core").ParamsDictionary>, resp: import("express").Response) => void) & import("firebase-functions").Runnable<any>;
     detach: import("firebase-functions").TriggerAnnotated & ((req: import("express").Request<import("express-serve-static-core").ParamsDictionary>, resp: import("express").Response) => void) & import("firebase-functions").Runnable<any>;
