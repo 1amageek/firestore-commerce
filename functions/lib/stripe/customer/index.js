@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const Stripe = require("stripe");
 const config_1 = require("../../config");
@@ -16,14 +15,9 @@ exports.create = functions.https.onCall(async (data, context) => {
     const uid = context.auth.uid;
     const stripe = new Stripe(STRIPE_API_KEY);
     try {
-        const customer = await stripe.customers.create({
+        return await stripe.customers.create({
             ...data,
             description: uid
-        });
-        return await admin.auth().setCustomUserClaims(uid, {
-            stripe: {
-                customerID: customer.id
-            }
         });
     }
     catch (error) {

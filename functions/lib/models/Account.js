@@ -13,6 +13,7 @@ const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 class Account extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
+        this.venders = {};
         this.country = '';
         this.isRejected = false;
         this.isSigned = false;
@@ -29,6 +30,10 @@ class Account extends ballcap_admin_1.Doc {
         return ballcap_admin_1.firestore.collection('commerce/1/accounts');
     }
 }
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Account.prototype, "venders", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)

@@ -1,6 +1,5 @@
 /// <reference types="express" />
 import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
 import { PaymentOptions } from '@1amageek/tradestore';
 import { Account } from './models/Account';
 import { User } from './models/User';
@@ -18,7 +17,6 @@ import { TradeTransaction } from './models/TradeTransaction';
 export { Account, User, Product, SKU, Plan, Order, OrderItem, Item, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction };
 export declare const auth: {
     setCustomer: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;
-    onCreate: functions.CloudFunction<admin.auth.UserRecord>;
     setPaymentMethod: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;
     setDefaultPaymentMethod: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;
 };

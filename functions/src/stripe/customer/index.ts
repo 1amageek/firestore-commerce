@@ -14,10 +14,11 @@ export const create = functions.https.onCall(async (data, context) => {
 	const uid: string = context.auth.uid
 	const stripe = new Stripe(STRIPE_API_KEY)
 	try {
-		return await stripe.customers.create({
+		const result = await stripe.customers.create({
 			...data,
 			description: uid
 		})
+		return result
 	} catch (error) {
 		console.error(error)
 	}
@@ -36,7 +37,8 @@ export const update = functions.https.onCall(async (data, context) => {
 	const stripe = new Stripe(STRIPE_API_KEY)
 	try {
 		const customerID = await getCustomerID(uid)
-		return await stripe.customers.update(customerID, data)
+		const result = await stripe.customers.update(customerID, data)
+		return result
 	} catch (error) {
 		console.error(error)
 	}
