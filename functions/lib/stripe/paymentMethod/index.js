@@ -17,10 +17,11 @@ exports.list = functions.https.onCall(async (data, context) => {
     const type = data["type"] || "card";
     try {
         const customerID = await helper_1.getCustomerID(uid);
-        return await stripe.paymentMethods.list({
+        const result = await stripe.paymentMethods.list({
             customer: customerID,
             type: type
         });
+        return result;
     }
     catch (error) {
         console.error(error);
@@ -43,9 +44,10 @@ exports.attach = functions.https.onCall(async (data, context) => {
     }
     try {
         const customerID = await helper_1.getCustomerID(uid);
-        return stripe.paymentMethods.attach(paymentMethodId, {
+        const result = await stripe.paymentMethods.attach(paymentMethodId, {
             customer: customerID
         });
+        return result;
     }
     catch (error) {
         console.error(error);
