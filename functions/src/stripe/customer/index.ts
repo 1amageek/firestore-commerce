@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
 import config from '../../config'
@@ -15,14 +14,9 @@ export const create = functions.https.onCall(async (data, context) => {
 	const uid: string = context.auth.uid
 	const stripe = new Stripe(STRIPE_API_KEY)
 	try {
-		const customer = await stripe.customers.create({
+		return await stripe.customers.create({
 			...data,
 			description: uid
-		})
-		return await admin.auth().setCustomUserClaims(uid, {
-			stripe: {
-				customerID: customer.id
-			}
 		})
 	} catch (error) {
 		console.error(error)

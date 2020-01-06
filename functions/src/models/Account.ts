@@ -9,6 +9,7 @@ export class Account extends Doc implements AccountProtocol<BalanceTransaction, 
 		return firestore.collection('commerce/1/accounts')
 	}
 
+	@Field venders: { [key: string]: any } = {}
 	@Field country: string = ''
 	@Field isRejected: boolean = false
 	@Field isSigned: boolean = false
