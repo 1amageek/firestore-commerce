@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
 import { nullFilter } from '../../../helper'
+import { ErrorCode } from '../../helper'
 import config from '../../../config'
 import { Plan } from '../../../models/Plan'
 
@@ -32,6 +33,11 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.plans.create(nullFilter(data))
 		} catch (error) {
+			if (error.row) {
+				if (error.row.code === ErrorCode.resource_missing) {
+					return
+				}
+			}
 			console.error(error)
 			plan.isAvailable = false
 			await plan.update()

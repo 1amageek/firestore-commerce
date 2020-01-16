@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
 import { nullFilter } from '../../../helper'
+import { ErrorCode } from '../../helper'
 import config from '../../../config'
 import { SKU } from '../../../models/SKU'
 
@@ -29,6 +30,11 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.skus.create(nullFilter(data))
 		} catch (error) {
+			if (error.row) {
+				if (error.row.code === ErrorCode.resource_missing) {
+					return
+				}
+			}
 			console.error(error)
 			sku.isAvailable = false
 			await sku.update()
