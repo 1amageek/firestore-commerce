@@ -35,9 +35,8 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.products.create(nullFilter(data))
 		} catch (error) {
-			console.log(error)
-			if (error.row) {
-				if (error.row.code === ErrorCode.resource_missing) {
+			if (error.raw) {
+				if (error.raw.code === ErrorCode.resource_missing) {
 					return
 				}
 			}
@@ -72,7 +71,6 @@ export const onUpdate = functions.firestore
 		try {
 			await stripe.products.update(product.id, nullFilter(data))
 		} catch (error) {
-			console.log(error)
 			console.error(error)
 			product.isAvailable = false
 			await product.update()
