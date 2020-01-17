@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const Stripe = require("stripe");
 const helper_1 = require("../../../helper");
+const helper_2 = require("../../helper");
 const config_1 = require("../../../config");
 const Product_1 = require("../../../models/Product");
 const Plan = require("./Plan");
@@ -34,6 +35,12 @@ exports.onCreate = functions.firestore
         await stripe.products.create(helper_1.nullFilter(data));
     }
     catch (error) {
+        console.log(error);
+        if (error.row) {
+            if (error.row.code === helper_2.ErrorCode.resource_missing) {
+                return;
+            }
+        }
         console.error(error);
         product.isAvailable = false;
         await product.update();
@@ -65,6 +72,7 @@ exports.onUpdate = functions.firestore
         await stripe.products.update(product.id, helper_1.nullFilter(data));
     }
     catch (error) {
+        console.log(error);
         console.error(error);
         product.isAvailable = false;
         await product.update();

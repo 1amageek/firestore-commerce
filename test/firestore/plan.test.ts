@@ -2,7 +2,6 @@ import * as admin from 'firebase-admin'
 import * as ballcap from '@1amageek/ballcap-admin'
 import * as functions from "firebase-functions-test"
 import * as Stripe from 'stripe'
-import * as sinon from 'sinon'
 
 import config from "../config"
 
@@ -13,7 +12,7 @@ const Test = functions({
 },
 	"./secret.json")
 
-const adminInitStub = sinon.stub(admin, 'initializeApp')
+admin.initializeApp()
 ballcap.initialize(admin.firestore())
 
 import * as index from "../../functions/src/index"
