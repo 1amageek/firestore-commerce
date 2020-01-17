@@ -33,8 +33,8 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.plans.create(nullFilter(data))
 		} catch (error) {
-			if (error.row) {
-				if (error.row.code === ErrorCode.resource_missing) {
+			if (error.raw) {
+				if (error.raw.code === ErrorCode.resource_missing) {
 					return
 				}
 			}
@@ -67,6 +67,11 @@ export const onUpdate = functions.firestore
 		try {
 			await stripe.plans.update(plan.id, nullFilter(data))
 		} catch (error) {
+			if (error.raw) {
+				if (error.raw.code === ErrorCode.resource_missing) {
+					return
+				}
+			}
 			console.error(error)
 			plan.isAvailable = false
 			await plan.update()

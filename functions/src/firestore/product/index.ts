@@ -71,6 +71,11 @@ export const onUpdate = functions.firestore
 		try {
 			await stripe.products.update(product.id, nullFilter(data))
 		} catch (error) {
+			if (error.raw) {
+				if (error.raw.code === ErrorCode.resource_missing) {
+					return
+				}
+			}
 			console.error(error)
 			product.isAvailable = false
 			await product.update()

@@ -30,8 +30,8 @@ export const onCreate = functions.firestore
 		try {
 			await stripe.skus.create(nullFilter(data))
 		} catch (error) {
-			if (error.row) {
-				if (error.row.code === ErrorCode.resource_missing) {
+			if (error.raw) {
+				if (error.raw.code === ErrorCode.resource_missing) {
 					return
 				}
 			}
@@ -67,6 +67,11 @@ export const onUpdate = functions.firestore
 		try {
 			await stripe.skus.update(sku.id, nullFilter(data))
 		} catch (error) {
+			if (error.raw) {
+				if (error.raw.code === ErrorCode.resource_missing) {
+					return
+				}
+			}
 			console.error(error)
 			sku.isAvailable = false
 			await sku.update()
