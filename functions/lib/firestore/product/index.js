@@ -71,6 +71,11 @@ exports.onUpdate = functions.firestore
         await stripe.products.update(product.id, helper_1.nullFilter(data));
     }
     catch (error) {
+        if (error.raw) {
+            if (error.raw.code === helper_2.ErrorCode.resource_missing) {
+                return;
+            }
+        }
         console.error(error);
         product.isAvailable = false;
         await product.update();

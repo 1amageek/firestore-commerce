@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import * as Stripe from 'stripe'
+import { getCustomerID } from './stripe/helper'
 import { initialize } from '@1amageek/ballcap-admin'
 import { Manager, PaymentOptions, OrderPaymentStatus, TradestoreError, SubscriptionController, SubscriptionOptions } from '@1amageek/tradestore'
 import config from './config'
@@ -53,12 +54,7 @@ export const checkout = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const userRecord = await admin.auth().getUser(uid)
-	const customClaims = userRecord.customClaims
-	if (!customClaims) {
-		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
-	}
-	const customer = (customClaims as any).stripe?.customerID
+	const customer = await getCustomerID(uid)
 	if (!customer) {
 		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
 	}
@@ -153,12 +149,7 @@ export const subscribe = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const userRecord = await admin.auth().getUser(uid)
-	const customClaims = userRecord.customClaims
-	if (!customClaims) {
-		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
-	}
-	const customer = (customClaims as any).stripe?.customerID
+	const customer = await getCustomerID(uid)
 	if (!customer) {
 		throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID')
 	}

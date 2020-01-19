@@ -32,8 +32,8 @@ exports.onCreate = functions.firestore
         await stripe.skus.create(helper_1.nullFilter(data));
     }
     catch (error) {
-        if (error.row) {
-            if (error.row.code === helper_2.ErrorCode.resource_missing) {
+        if (error.raw) {
+            if (error.raw.code === helper_2.ErrorCode.resource_missing) {
                 return;
             }
         }
@@ -69,6 +69,11 @@ exports.onUpdate = functions.firestore
         await stripe.skus.update(sku.id, helper_1.nullFilter(data));
     }
     catch (error) {
+        if (error.raw) {
+            if (error.raw.code === helper_2.ErrorCode.resource_missing) {
+                return;
+            }
+        }
         console.error(error);
         sku.isAvailable = false;
         await sku.update();
