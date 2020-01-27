@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const helper_1 = require("./stripe/helper");
 const ballcap_admin_1 = require("@1amageek/ballcap-admin");
 const tradestore_1 = require("@1amageek/tradestore");
 const config_1 = require("./config");
@@ -47,7 +48,6 @@ exports.firestore = { ...FirestoreTrigger };
 // Stripe API
 exports.stripe = { ...StripeAPI };
 exports.checkout = functions.https.onCall(async (data, context) => {
-    var _a;
     if (!context.auth) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
@@ -56,12 +56,7 @@ exports.checkout = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
     }
     const uid = context.auth.uid;
-    const userRecord = await admin.auth().getUser(uid);
-    const customClaims = userRecord.customClaims;
-    if (!customClaims) {
-        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
-    }
-    const customer = (_a = customClaims.stripe) === null || _a === void 0 ? void 0 : _a.customerID;
+    const customer = await helper_1.getCustomerID(uid);
     if (!customer) {
         throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
     }
@@ -143,7 +138,6 @@ exports.checkout = functions.https.onCall(async (data, context) => {
     }
 });
 exports.subscribe = functions.https.onCall(async (data, context) => {
-    var _a;
     if (!context.auth) {
         throw new functions.https.HttpsError('failed-precondition', 'The function must be called while authenticated.');
     }
@@ -152,12 +146,7 @@ exports.subscribe = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.');
     }
     const uid = context.auth.uid;
-    const userRecord = await admin.auth().getUser(uid);
-    const customClaims = userRecord.customClaims;
-    if (!customClaims) {
-        throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
-    }
-    const customer = (_a = customClaims.stripe) === null || _a === void 0 ? void 0 : _a.customerID;
+    const customer = await helper_1.getCustomerID(uid);
     if (!customer) {
         throw new functions.https.HttpsError('invalid-argument', 'User have not Stripe customerID');
     }

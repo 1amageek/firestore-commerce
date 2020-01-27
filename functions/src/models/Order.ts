@@ -18,6 +18,8 @@ export class Order extends Doc implements OrderProtocol<OrderItem> {
 	@Field transferredTo: DocumentReference[] = []
 	@Field paidAt?: Timestamp
 	@Field expirationDate?: Timestamp
+	@Field shippingDate?: any
+	@Field estimatedArrivalDate?: any
 	@Field currency: Currency = Currency.JPY
 	@Field amount: number = 0
 	@Field items: OrderItem[] = []
