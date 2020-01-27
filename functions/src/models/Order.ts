@@ -28,4 +28,5 @@ export class Order extends Doc implements OrderProtocol<OrderItem> {
 	@Field transferStatus: OrderTransferStatus = OrderTransferStatus.none
 	@Field transactionResults: TransactionResult[] = []
 	@Field isCancelled: boolean = false
+	@Field metadata?: any
 }

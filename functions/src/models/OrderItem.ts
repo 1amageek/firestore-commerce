@@ -12,7 +12,7 @@ export class OrderItem extends Model implements OrderItemProtocol {
 	@Field currency: Currency = Currency.JPY
 	@Field amount: number = 0
 	@Field status: OrderItemStatus = OrderItemStatus.none
-
 	@Field name: string = ''
 	@Field thumbnailImage?: File
+	@Field metadata?: any
 }

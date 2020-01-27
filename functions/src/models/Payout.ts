@@ -13,4 +13,5 @@ export class Payout extends Doc implements PayoutProtocol {
 	@Field status: PayoutStatus = PayoutStatus.none
 	@Field transactionResults: TransactionResult[] = []
 	@Field isCancelled: boolean = false
+	@Field metadata?: any
 }

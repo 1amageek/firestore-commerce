@@ -17,4 +17,5 @@ export class BalanceTransaction extends Doc implements BalanceTransactionProtoco
 	@Field transfer?: string | undefined
 	@Field payout?: string | undefined
 	@Field transactionResults: TransactionResult[] = []
+	@Field metadata?: any
 }

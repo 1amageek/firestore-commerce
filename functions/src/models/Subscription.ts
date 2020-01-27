@@ -22,4 +22,5 @@ export class Subscription extends Doc implements SubscriptionProtocol<Subscripti
 	@Field status: SubscriptionStatus = SubscriptionStatus.incomplete
 	@Field trial?: Period
 	@Field result?: SubscriptionResult
+	@Field metadata?: any
 }

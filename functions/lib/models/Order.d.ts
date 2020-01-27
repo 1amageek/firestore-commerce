@@ -15,6 +15,8 @@ export declare class Order extends Doc implements OrderProtocol<OrderItem> {
     transferredTo: DocumentReference[];
     paidAt?: Timestamp;
     expirationDate?: Timestamp;
+    shippingDate?: any;
+    estimatedArrivalDate?: any;
     currency: Currency;
     amount: number;
     items: OrderItem[];

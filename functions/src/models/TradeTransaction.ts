@@ -16,4 +16,5 @@ export class TradeTransaction extends Doc implements TradeTransactionProtocol {
 	@Field skuRefernece!: DocumentReference
 	@Field itemReference!: DocumentReference
 	@Field stockReference?: DocumentReference
+	@Field metadata?: any
 }

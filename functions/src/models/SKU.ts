@@ -19,5 +19,6 @@ export class SKU extends Doc implements SKUProtocol<Stock> {
 	@Field amount: number = 0
 	@Field inventory: Inventory = { type: StockType.finite, quantity: 1 }
 	@Field isPrivate: boolean = false
+	@Field metadata?: any
 	@SubCollection stocks: Collection<Stock> = new Collection()
 }

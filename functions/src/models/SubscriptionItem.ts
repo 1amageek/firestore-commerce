@@ -11,4 +11,5 @@ export class SubscriptionItem extends Model implements SubscriptionItemProtocol 
 	@Field taxRates: number = 0
 	@Field amount: number = 0
 	@Field currency: Currency = Currency.JPY
+	@Field metadata?: any
 }

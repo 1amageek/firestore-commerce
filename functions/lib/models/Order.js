@@ -72,6 +72,14 @@ __decorate([
 ], Order.prototype, "expirationDate", void 0);
 __decorate([
     ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Order.prototype, "shippingDate", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Order.prototype, "estimatedArrivalDate", void 0);
+__decorate([
+    ballcap_admin_1.Field,
     __metadata("design:type", String)
 ], Order.prototype, "currency", void 0);
 __decorate([
