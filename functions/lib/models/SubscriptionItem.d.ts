@@ -10,4 +10,5 @@ export declare class SubscriptionItem extends Model implements SubscriptionItemP
     taxRates: number;
     amount: number;
     currency: Currency;
+    metadata?: any;
 }

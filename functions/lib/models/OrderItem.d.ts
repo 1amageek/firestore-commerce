@@ -13,4 +13,5 @@ export declare class OrderItem extends Model implements OrderItemProtocol {
     status: OrderItemStatus;
     name: string;
     thumbnailImage?: File;
+    metadata?: any;
 }

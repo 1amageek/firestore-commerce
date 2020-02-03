@@ -64,5 +64,9 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Array)
 ], BalanceTransaction.prototype, "transactionResults", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], BalanceTransaction.prototype, "metadata", void 0);
 exports.BalanceTransaction = BalanceTransaction;
 //# sourceMappingURL=BalanceTransaction.js.map

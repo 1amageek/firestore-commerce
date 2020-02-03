@@ -82,5 +82,9 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Object)
 ], Subscription.prototype, "result", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Subscription.prototype, "metadata", void 0);
 exports.Subscription = Subscription;
 //# sourceMappingURL=Subscription.js.map

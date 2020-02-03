@@ -71,6 +71,10 @@ __decorate([
     __metadata("design:type", Boolean)
 ], SKU.prototype, "isPrivate", void 0);
 __decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], SKU.prototype, "metadata", void 0);
+__decorate([
     ballcap_admin_1.SubCollection,
     __metadata("design:type", ballcap_admin_1.Collection)
 ], SKU.prototype, "stocks", void 0);

@@ -72,5 +72,9 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", ballcap_admin_1.File)
 ], OrderItem.prototype, "thumbnailImage", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], OrderItem.prototype, "metadata", void 0);
 exports.OrderItem = OrderItem;
 //# sourceMappingURL=OrderItem.js.map

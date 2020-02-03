@@ -56,5 +56,9 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
 ], SubscriptionItem.prototype, "currency", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], SubscriptionItem.prototype, "metadata", void 0);
 exports.SubscriptionItem = SubscriptionItem;
 //# sourceMappingURL=SubscriptionItem.js.map

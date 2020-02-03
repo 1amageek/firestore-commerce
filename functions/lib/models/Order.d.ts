@@ -25,4 +25,5 @@ export declare class Order extends Doc implements OrderProtocol<OrderItem> {
     transferStatus: OrderTransferStatus;
     transactionResults: TransactionResult[];
     isCancelled: boolean;
+    metadata?: any;
 }

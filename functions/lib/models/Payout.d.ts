@@ -8,4 +8,5 @@ export declare class Payout extends Doc implements PayoutProtocol {
     status: PayoutStatus;
     transactionResults: TransactionResult[];
     isCancelled: boolean;
+    metadata?: any;
 }

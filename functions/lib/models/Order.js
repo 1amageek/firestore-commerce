@@ -110,5 +110,9 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Boolean)
 ], Order.prototype, "isCancelled", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Order.prototype, "metadata", void 0);
 exports.Order = Order;
 //# sourceMappingURL=Order.js.map

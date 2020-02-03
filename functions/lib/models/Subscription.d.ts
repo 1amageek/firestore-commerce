@@ -17,4 +17,5 @@ export declare class Subscription extends Doc implements SubscriptionProtocol<Su
     status: SubscriptionStatus;
     trial?: Period;
     result?: SubscriptionResult;
+    metadata?: any;
 }

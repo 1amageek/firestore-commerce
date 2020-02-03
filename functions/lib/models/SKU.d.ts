@@ -14,5 +14,6 @@ export declare class SKU extends Doc implements SKUProtocol<Stock> {
     amount: number;
     inventory: Inventory;
     isPrivate: boolean;
+    metadata?: any;
     stocks: Collection<Stock>;
 }

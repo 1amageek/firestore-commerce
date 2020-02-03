@@ -12,4 +12,5 @@ export declare class BalanceTransaction extends Doc implements BalanceTransactio
     transfer?: string | undefined;
     payout?: string | undefined;
     transactionResults: TransactionResult[];
+    metadata?: any;
 }

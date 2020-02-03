@@ -59,5 +59,9 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", ballcap_admin_1.DocumentReference)
 ], TradeTransaction.prototype, "stockReference", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], TradeTransaction.prototype, "metadata", void 0);
 exports.TradeTransaction = TradeTransaction;
 //# sourceMappingURL=TradeTransaction.js.map

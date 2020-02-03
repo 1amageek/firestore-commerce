@@ -49,5 +49,9 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", Boolean)
 ], Payout.prototype, "isCancelled", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Object)
+], Payout.prototype, "metadata", void 0);
 exports.Payout = Payout;
 //# sourceMappingURL=Payout.js.map

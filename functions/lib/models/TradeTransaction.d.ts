@@ -11,4 +11,5 @@ export declare class TradeTransaction extends Doc implements TradeTransactionPro
     skuRefernece: DocumentReference;
     itemReference: DocumentReference;
     stockReference?: DocumentReference;
+    metadata?: any;
 }
