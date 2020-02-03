@@ -1,7 +1,6 @@
 import * as functions from 'firebase-functions'
 import * as Stripe from 'stripe'
 import config from '../../config'
-import { getCustomerID } from '../helper'
 
 export const create = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
