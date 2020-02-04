@@ -12,6 +12,7 @@ export class Subscription extends Doc implements SubscriptionProtocol<Subscripti
 	@Field subscribedBy!: string
 	@Field publishedBy!: string
 	@Field createdBy!: string
+	@Field isCancelled: boolean = false
 	@Field interval: Interval = Interval.month
 	@Field intervalCount: number = 1
 	@Field startAt: Timestamp = FieldValue.serverTimestamp()

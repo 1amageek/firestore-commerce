@@ -12,9 +12,10 @@ import { Item } from './models/Item';
 import { Subscription } from './models/Subscription';
 import { SubscriptionItem } from './models/SubscriptionItem';
 import { Stock } from './models/Stock';
+import { Payout } from './models/Payout';
 import { BalanceTransaction } from './models/BalanceTransaction';
 import { TradeTransaction } from './models/TradeTransaction';
-export { Account, User, Product, SKU, Plan, Order, OrderItem, Item, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction };
+export { Account, User, Product, SKU, Plan, Order, OrderItem, Item, Subscription, SubscriptionItem, Stock, Payout, PaymentOptions, BalanceTransaction, TradeTransaction };
 export declare const auth: {
     setCustomer: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;
     setPaymentMethod: functions.TriggerAnnotated & ((req: functions.Request<import("express-serve-static-core").ParamsDictionary>, resp: functions.Response) => void) & functions.Runnable<any>;
