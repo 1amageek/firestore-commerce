@@ -34,7 +34,7 @@ import * as StripeAPI from './stripe'
 
 
 // Commerce documents.
-export { Account, User, Product, SKU, Plan, Order, OrderItem, Item, Subscription, SubscriptionItem, Stock, PaymentOptions, BalanceTransaction, TradeTransaction }
+export { Account, User, Product, SKU, Plan, Order, OrderItem, Item, Subscription, SubscriptionItem, Stock, Payout, PaymentOptions, BalanceTransaction, TradeTransaction }
 
 // Authentication triggerd functions.
 export const auth = { ...authTrigger }
