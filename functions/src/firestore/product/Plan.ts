@@ -5,6 +5,34 @@ import { ErrorCode } from '../helper'
 import config from '../../config'
 import { Plan } from '../../models/Plan'
 
+const create = async (stripe: Stripe, plan: Plan) => {
+	const data: Stripe.plans.IPlanCreationOptions = {
+		id: plan.id,
+		product: plan.parent.parent!.id,
+		nickname: plan.name,
+		interval: plan.interval,
+		interval_count: plan.intervalCount,
+		currency: plan.currency,
+		trial_period_days: plan.trialPeriodDays?.toDate().valueOf(),
+		amount: plan.amount,
+		active: plan.isAvailable,
+		metadata: {
+			plan_path: plan.path,
+			product_path: plan.parent.parent!.path
+		}
+	}
+	try {
+		await stripe.plans.create(nullFilter(data))
+	} catch (error) {
+		if (error.raw) {
+			if (error.raw.code === ErrorCode.resource_missing) {
+				return
+			}
+		}
+		throw error
+	}
+}
+
 export const onCreate = functions.firestore
 	.document('/commerce/{version}/products/{productID}/plans/{planID}')
 	.onCreate(async (snapshot, context) => {
@@ -15,29 +43,9 @@ export const onCreate = functions.firestore
 		}
 		const plan: Plan = Plan.fromSnapshot(snapshot)
 		const stripe = new Stripe(STRIPE_API_KEY)
-		const data: Stripe.plans.IPlanCreationOptions = {
-			id: plan.id,
-			product: plan.parent.parent!.id,
-			nickname: plan.name,
-			interval: plan.interval,
-			interval_count: plan.intervalCount,
-			currency: plan.currency,
-			trial_period_days: plan.trialPeriodDays?.toDate().valueOf(),
-			amount: plan.amount,
-			active: plan.isAvailable,
-			metadata: {
-				plan_path: plan.path,
-				product_path: plan.parent.parent!.path
-			}
-		}
 		try {
-			await stripe.plans.create(nullFilter(data))
+			await create(stripe, plan)
 		} catch (error) {
-			if (error.raw) {
-				if (error.raw.code === ErrorCode.resource_missing) {
-					return
-				}
-			}
 			console.error(error)
 			plan.isAvailable = false
 			await plan.update()
@@ -68,7 +76,17 @@ export const onUpdate = functions.firestore
 			await stripe.plans.update(plan.id, nullFilter(data))
 		} catch (error) {
 			if (error.raw) {
+				if (error.raw.param === "product") {
+					return
+				}
 				if (error.raw.code === ErrorCode.resource_missing) {
+					try {
+						await create(stripe, plan)
+					} catch (error) {
+						console.error(error)
+						plan.isAvailable = false
+						await plan.update()
+					}
 					return
 				}
 			}

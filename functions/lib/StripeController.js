@@ -69,6 +69,7 @@ class StripeController {
         const data = {
             customer: customer,
             trial_from_plan: true,
+            tax_percent: 8,
             metadata: options.metadata
         };
         data.items = subscription.items.map(item => {
