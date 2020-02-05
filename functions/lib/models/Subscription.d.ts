@@ -7,6 +7,7 @@ export declare class Subscription extends Doc implements SubscriptionProtocol<Su
     subscribedBy: string;
     publishedBy: string;
     createdBy: string;
+    isCancelled: boolean;
     interval: Interval;
     intervalCount: number;
     startAt: Timestamp;

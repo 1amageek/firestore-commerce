@@ -75,6 +75,7 @@ export class StripeController implements PaymentDelegate {
 		const data: Stripe.subscriptions.ISubscriptionCreationOptions = {
 			customer: customer,
 			trial_from_plan: true,
+			tax_percent: 8,
 			metadata: options.metadata
 		}
 		data.items = subscription.items.map(item => {

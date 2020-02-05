@@ -15,6 +15,7 @@ class Subscription extends ballcap_admin_1.Doc {
     constructor() {
         super(...arguments);
         this.shard = tradestore_1.randomShard(tradestore_1.DafaultShardCharacters);
+        this.isCancelled = false;
         this.interval = tradestore_1.Interval.month;
         this.intervalCount = 1;
         this.startAt = ballcap_admin_1.FieldValue.serverTimestamp();
@@ -42,6 +43,10 @@ __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
 ], Subscription.prototype, "createdBy", void 0);
+__decorate([
+    ballcap_admin_1.Field,
+    __metadata("design:type", Boolean)
+], Subscription.prototype, "isCancelled", void 0);
 __decorate([
     ballcap_admin_1.Field,
     __metadata("design:type", String)
