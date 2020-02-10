@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions'
-import * as Stripe from 'stripe'
+import Stripe from 'stripe'
 import config from '../../config'
 import { getCustomerID } from '../helper'
 
@@ -12,7 +12,7 @@ export const create = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	try {
 		const result = await stripe.customers.create({
 			...data,
@@ -34,7 +34,7 @@ export const update = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	try {
 		const customerID = await getCustomerID(uid)
 		const result = await stripe.customers.update(customerID, data)
@@ -54,7 +54,7 @@ export const retrieve = functions.https.onCall(async (_, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	try {
 		const customerID = await getCustomerID(uid)
 		const result = await stripe.customers.retrieve(customerID)

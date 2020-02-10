@@ -1,6 +1,6 @@
 import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
-import * as Stripe from 'stripe'
+import Stripe from 'stripe'
 import config from '../config'
 
 export const setCustomer = functions.https.onCall(async (data, context) => {
@@ -12,11 +12,11 @@ export const setCustomer = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	const paymentMethod = data['paymentMethod']
 
 	try {
-		let data: Stripe.customers.ICustomerCreationOptions = {
+		let data: Stripe.CustomerCreateParams = {
 			description: uid
 		}
 		if (paymentMethod) {
@@ -49,7 +49,7 @@ export const setPaymentMethod = functions.https.onCall(async (data, context) => 
 	if (!paymentMethod) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires `peymentMethod`')
 	}
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	const uid: string = context.auth.uid
 	const userRecord = await admin.auth().getUser(uid)
 	const customClaims = userRecord.customClaims
@@ -83,7 +83,7 @@ export const setDefaultPaymentMethod = functions.https.onCall(async (data, conte
 	if (!paymentMethod) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires `peymentMethod`')
 	}
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	const uid: string = context.auth.uid
 	const userRecord = await admin.auth().getUser(uid)
 	const customClaims = userRecord.customClaims

@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions'
-import * as Stripe from 'stripe'
+import Stripe from 'stripe'
 import { nullFilter } from '../../helper'
 import { ErrorCode } from '../helper'
 import config from '../../config'
@@ -14,8 +14,8 @@ export const onCreate = functions.firestore
 			throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 		}
 		const sku: SKU = SKU.fromSnapshot(snapshot)
-		const stripe = new Stripe(STRIPE_API_KEY)
-		const data: Stripe.skus.ISkuCreationOptions = {
+		const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
+		const data: Stripe.SkuCreateParams = {
 			id: sku.id,
 			product: sku.parent.parent!.id,
 			inventory: sku.inventory,
@@ -53,8 +53,8 @@ export const onUpdate = functions.firestore
 		if (!STRIPE_API_KEY) {
 			throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 		}
-		const stripe = new Stripe(STRIPE_API_KEY)
-		const data: Stripe.skus.ISkuUpdateOptions = {
+		const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
+		const data: Stripe.SkuUpdateParams = {
 			inventory: sku.inventory,
 			currency: sku.currency,
 			price: sku.amount,

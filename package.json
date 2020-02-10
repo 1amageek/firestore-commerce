@@ -52,23 +52,23 @@
 		"@1amageek/tradestore": "^0.4.3",
 		"@firebase/testing": "^0.16.0",
 		"@types/jest": "^24.0.23",
-		"@types/stripe": "^7.13.16",
-		"firebase-admin": "^8.8.0",
+		"@types/stripe": "^7.13.21",
+		"firebase-admin": "^8.9.2",
 		"firebase-functions": "^3.3.0",
 		"firebase-functions-test": "^0.1.7",
 		"jest": "^24.9.0",
 		"rimraf": "^3.0.0",
-		"stripe": "^7.14.0",
+		"stripe": "^8.14.0",
 		"ts-jest": "^24.1.0",
 		"tslint": "^5.20.1",
 		"typescript": "^3.7.3"
 	},
 	"peerDependencies": {
 		"@1amageek/ballcap-admin": "^0.5.6",
-		"@1amageek/tradestore": "^0.4.2",
-		"firebase-admin": "^8.8.0",
+		"@1amageek/tradestore": "^0.4.3",
+		"firebase-admin": "^8.9.2",
 		"firebase-functions": "^3.3.0",
-		"stripe": "^7.14.0"
+		"stripe": "^8.14.0"
 	},
 	"private": false
 }

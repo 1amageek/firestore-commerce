@@ -1,5 +1,5 @@
 import * as functions from 'firebase-functions'
-import * as Stripe from 'stripe'
+import Stripe from 'stripe'
 import config from '../../config'
 import { getCustomerID } from '../helper'
 
@@ -11,7 +11,7 @@ export const create = functions.https.onCall(async (data, context) => {
 	if (!STRIPE_API_KEY) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	try {
 		const result = await stripe.paymentMethods.create(data)
 		return result
@@ -29,7 +29,7 @@ export const retrieve = functions.https.onCall(async (data, context) => {
 	if (!STRIPE_API_KEY) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	const paymentMethodId = data["paymentMethodID"]
 	if (!paymentMethodId) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires paymentMethodID in data.')
@@ -52,7 +52,7 @@ export const list = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	const type = data["type"] || "card"
 	try {
 		const customerID = await getCustomerID(uid)
@@ -76,7 +76,7 @@ export const attach = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
 	const uid: string = context.auth.uid
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	const paymentMethodId = data["paymentMethodID"]
 	if (!paymentMethodId) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires paymentMethodID in data.')
@@ -101,7 +101,7 @@ export const detach = functions.https.onCall(async (data, context) => {
 	if (!STRIPE_API_KEY) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 	}
-	const stripe = new Stripe(STRIPE_API_KEY)
+	const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 	const paymentMethodId = data["paymentMethodID"]
 	if (!paymentMethodId) {
 		throw new functions.https.HttpsError('invalid-argument', 'The functions requires paymentMethodID in data.')

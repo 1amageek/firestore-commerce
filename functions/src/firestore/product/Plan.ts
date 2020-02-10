@@ -1,12 +1,12 @@
 import * as functions from 'firebase-functions'
-import * as Stripe from 'stripe'
+import Stripe from 'stripe'
 import { nullFilter } from '../../helper'
 import { ErrorCode } from '../helper'
 import config from '../../config'
 import { Plan } from '../../models/Plan'
 
 const create = async (stripe: Stripe, plan: Plan) => {
-	const data: Stripe.plans.IPlanCreationOptions = {
+	const data: Stripe.PlanCreateParams = {
 		id: plan.id,
 		product: plan.parent.parent!.id,
 		nickname: plan.name,
@@ -42,7 +42,7 @@ export const onCreate = functions.firestore
 			throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 		}
 		const plan: Plan = Plan.fromSnapshot(snapshot)
-		const stripe = new Stripe(STRIPE_API_KEY)
+		const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
 		try {
 			await create(stripe, plan)
 		} catch (error) {
@@ -64,8 +64,8 @@ export const onUpdate = functions.firestore
 		if (!STRIPE_API_KEY) {
 			throw new functions.https.HttpsError('invalid-argument', 'The functions requires STRIPE_API_KEY.')
 		}
-		const stripe = new Stripe(STRIPE_API_KEY)
-		const data: Stripe.plans.IPlanUpdateOptions = {
+		const stripe = new Stripe(STRIPE_API_KEY, { apiVersion: '2019-12-03' })
+		const data: Stripe.PlanUpdateParams = {
 			product: plan.parent.parent!.id,
 			metadata: {
 				plan_path: plan.path,

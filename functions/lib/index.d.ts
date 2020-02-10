@@ -24,28 +24,28 @@ export declare const auth: {
 export declare const firestore: {
     product: {
         plan: {
-            onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-            onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+            onCreate: functions.CloudFunction<functions.firestore.DocumentSnapshot>;
+            onUpdate: functions.CloudFunction<functions.Change<functions.firestore.DocumentSnapshot>>;
         };
         sku: {
-            onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-            onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+            onCreate: functions.CloudFunction<functions.firestore.DocumentSnapshot>;
+            onUpdate: functions.CloudFunction<functions.Change<functions.firestore.DocumentSnapshot>>;
         };
-        onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-        onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+        onCreate: functions.CloudFunction<functions.firestore.DocumentSnapshot>;
+        onUpdate: functions.CloudFunction<functions.Change<functions.firestore.DocumentSnapshot>>;
     };
     user: {
         product: {
             plan: {
-                onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-                onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+                onCreate: functions.CloudFunction<functions.firestore.DocumentSnapshot>;
+                onUpdate: functions.CloudFunction<functions.Change<functions.firestore.DocumentSnapshot>>;
             };
             sku: {
-                onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-                onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+                onCreate: functions.CloudFunction<functions.firestore.DocumentSnapshot>;
+                onUpdate: functions.CloudFunction<functions.Change<functions.firestore.DocumentSnapshot>>;
             };
-            onCreate: functions.CloudFunction<FirebaseFirestore.DocumentSnapshot>;
-            onUpdate: functions.CloudFunction<functions.Change<FirebaseFirestore.DocumentSnapshot>>;
+            onCreate: functions.CloudFunction<functions.firestore.DocumentSnapshot>;
+            onUpdate: functions.CloudFunction<functions.Change<functions.firestore.DocumentSnapshot>>;
         };
     };
 };

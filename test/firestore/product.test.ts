@@ -3,7 +3,7 @@ process.env.FIRESTORE_EMULATOR_HOST = 'localhost:8080'
 import * as admin from '@firebase/testing'
 import * as ballcap from '@1amageek/ballcap-admin'
 import * as functions from "firebase-functions-test"
-import * as Stripe from 'stripe'
+import Stripe from 'stripe'
 import config from "../config"
 
 const firebase = admin.initializeTestApp({

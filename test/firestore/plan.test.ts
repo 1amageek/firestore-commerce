@@ -1,7 +1,7 @@
 import * as admin from 'firebase-admin'
 import * as ballcap from '@1amageek/ballcap-admin'
 import * as functions from "firebase-functions-test"
-import * as Stripe from 'stripe'
+import Stripe from 'stripe'
 
 import config from "../config"
 

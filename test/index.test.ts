@@ -25,7 +25,7 @@ describe("Firestore triggerd test", () => {
 // import * as ballcap from '@1amageek/ballcap-admin'
 // import * as functions from "firebase-functions-test"
 // import * as index from "../functions/src/index"
-// import * as Stripe from 'stripe'
+// import Stripe from 'stripe'
 // import { Interval, Currency } from '@1amageek/tradestore'
 // import config from "./config"
 

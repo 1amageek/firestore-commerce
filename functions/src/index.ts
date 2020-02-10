@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import * as Stripe from 'stripe'
 import { getCustomerID } from './stripe/helper'
 import { initialize } from '@1amageek/ballcap-admin'
 import { Manager, PaymentOptions, OrderPaymentStatus, TradestoreError, SubscriptionController, SubscriptionOptions } from '@1amageek/tradestore'
@@ -172,7 +171,7 @@ export const subscribe = functions.https.onCall(async (data, context) => {
 	const subscriber: User = new User(uid)
 	try {
 		const subscription = await controller.subscribe(subscriber, plans, subscriptionOptions, async (subscription, option, transaction) => {
-			const result: Stripe.subscriptions.ISubscription = await controller.delegate!.subscribe(subscription, option)
+			const result = await controller.delegate!.subscribe(subscription, option)
 			subscription.result = result
 			return subscription
 		})
